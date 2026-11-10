@@ -1,0 +1,1686 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Ernährung">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#F2F2F7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+<meta name="format-detection" content="telephone=no">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="icon" type="image/png" href="icons/icon-192.png">
+<style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Ernährungsplan</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..700&display=swap">
+<style>
+/* Layout: iOS-App im Grouped-Stil – Large Title, Inset-Grouped-Listen auf grauem Grund, schwebende Glas-Tab-Bar; eine Spalte, max. 640 px */
+:root{
+  --bg:#F2F2F7; --card:#FFFFFF; --sheet:#F2F2F7; --sheet-card:#FFFFFF; --seg-on:#FFFFFF;
+  --fill:rgba(120,120,128,.12); --fill-2:rgba(120,120,128,.08);
+  --label:#000000; --label-2:rgba(60,60,67,.6); --label-3:rgba(60,60,67,.3);
+  --sep:rgba(60,60,67,.29);
+  --tint:#1E7F38; --on-tint:#FFFFFF; --ring-kcal:#34C759; --on-fill:#FFFFFF;
+  --protein:#FF2D55; --carbs:#FF9500; --fat:#5856D6; --water:#007AFF;
+  --i-orange:#FF9500; --i-green:#34C759; --i-blue:#007AFF; --i-pink:#FF2D55; --i-indigo:#5856D6;
+  --i-teal:#30B0C7; --i-purple:#AF52DE; --i-gray:#8E8E93; --i-red:#FF3B30;
+  --avatar-a:#A5ABB8; --avatar-b:#858994;
+  --glass:rgba(249,249,251,.74); --glass-edge:rgba(0,0,0,.07); --glass-hi:rgba(255,255,255,.85);
+  --shadow:0 10px 30px rgba(0,0,0,.12),0 1px 3px rgba(0,0,0,.06);
+  --scrim:rgba(0,0,0,.22);
+  --glass-tint:rgba(255,255,255,.3); --glass-rim:rgba(255,255,255,.8); --glass-rim-2:rgba(255,255,255,.2); --glass-hair:rgba(0,0,0,.07);
+  --drop-tint:rgba(120,120,128,.16); --glass-drop:rgba(255,255,255,.12); --seg-thumb:rgba(255,255,255,.94);
+  --glass-shadow:0 10px 30px rgba(0,0,0,.13),0 2px 6px rgba(0,0,0,.06);
+  --sheet-glass:rgba(246,246,249,.84); --bg-fade:rgba(242,242,247,.74);
+  --amb-1:rgba(52,199,89,.30); --amb-2:rgba(255,149,0,.22); --amb-3:rgba(255,45,85,.17); --amb-4:rgba(88,86,214,.18);
+  --font:-apple-system,BlinkMacSystemFont,"SF Pro Text","Inter","Segoe UI",system-ui,sans-serif;
+  --font-display:-apple-system,BlinkMacSystemFont,"SF Pro Display","Inter","Segoe UI",system-ui,sans-serif;
+  --font-round:ui-rounded,"SF Pro Rounded",-apple-system,BlinkMacSystemFont,"Inter","Segoe UI",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#000000; --card:#1C1C1E; --sheet:#1C1C1E; --sheet-card:#2C2C2E; --seg-on:#636366;
+    --fill:rgba(118,118,128,.24); --fill-2:rgba(118,118,128,.16);
+    --label:#FFFFFF; --label-2:rgba(235,235,245,.6); --label-3:rgba(235,235,245,.3);
+    --sep:rgba(84,84,88,.65);
+    --tint:#30D158; --on-tint:#000000; --ring-kcal:#30D158;
+    --protein:#FF375F; --carbs:#FF9F0A; --fat:#7D7AFF; --water:#0A84FF;
+    --i-orange:#FF9F0A; --i-green:#30D158; --i-blue:#0A84FF; --i-pink:#FF375F; --i-indigo:#5E5CE6;
+    --i-teal:#40C8E0; --i-purple:#BF5AF2; --i-gray:#8E8E93; --i-red:#FF453A;
+    --avatar-a:#6C6C70; --avatar-b:#48484A;
+    --glass:rgba(38,38,40,.72); --glass-edge:rgba(255,255,255,.1); --glass-hi:rgba(255,255,255,.08);
+    --shadow:0 10px 30px rgba(0,0,0,.5),0 1px 3px rgba(0,0,0,.4);
+    --scrim:rgba(0,0,0,.45); --glass-tint:rgba(255,255,255,.07); --glass-rim:rgba(255,255,255,.4); --glass-rim-2:rgba(255,255,255,.08); --glass-hair:rgba(255,255,255,.06);
+    --drop-tint:rgba(255,255,255,.15); --glass-drop:rgba(255,255,255,.05); --seg-thumb:rgba(99,99,102,.92);
+    --glass-shadow:0 10px 30px rgba(0,0,0,.55),0 2px 6px rgba(0,0,0,.3);
+    --sheet-glass:rgba(30,30,32,.8); --bg-fade:rgba(0,0,0,.6);
+    --amb-1:rgba(48,209,88,.22); --amb-2:rgba(255,159,10,.15); --amb-3:rgba(255,55,95,.16); --amb-4:rgba(94,92,230,.24);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#000000; --card:#1C1C1E; --sheet:#1C1C1E; --sheet-card:#2C2C2E; --seg-on:#636366;
+  --fill:rgba(118,118,128,.24); --fill-2:rgba(118,118,128,.16);
+  --label:#FFFFFF; --label-2:rgba(235,235,245,.6); --label-3:rgba(235,235,245,.3);
+  --sep:rgba(84,84,88,.65);
+  --tint:#30D158; --on-tint:#000000; --ring-kcal:#30D158;
+  --protein:#FF375F; --carbs:#FF9F0A; --fat:#7D7AFF; --water:#0A84FF;
+  --i-orange:#FF9F0A; --i-green:#30D158; --i-blue:#0A84FF; --i-pink:#FF375F; --i-indigo:#5E5CE6;
+  --i-teal:#40C8E0; --i-purple:#BF5AF2; --i-gray:#8E8E93; --i-red:#FF453A;
+  --avatar-a:#6C6C70; --avatar-b:#48484A;
+  --glass:rgba(38,38,40,.72); --glass-edge:rgba(255,255,255,.1); --glass-hi:rgba(255,255,255,.08);
+  --shadow:0 10px 30px rgba(0,0,0,.5),0 1px 3px rgba(0,0,0,.4);
+  --scrim:rgba(0,0,0,.45); --glass-tint:rgba(255,255,255,.07); --glass-rim:rgba(255,255,255,.4); --glass-rim-2:rgba(255,255,255,.08); --glass-hair:rgba(255,255,255,.06);
+    --drop-tint:rgba(255,255,255,.15); --glass-drop:rgba(255,255,255,.05); --seg-thumb:rgba(99,99,102,.92);
+    --glass-shadow:0 10px 30px rgba(0,0,0,.55),0 2px 6px rgba(0,0,0,.3);
+    --sheet-glass:rgba(30,30,32,.8); --bg-fade:rgba(0,0,0,.6);
+    --amb-1:rgba(48,209,88,.22); --amb-2:rgba(255,159,10,.15); --amb-3:rgba(255,55,95,.16); --amb-4:rgba(94,92,230,.24);
+}
+
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{overflow-x:clip}
+body{
+  background:var(--bg); color:var(--label);
+  font:400 17px/1.3 var(--font); letter-spacing:-.012em; font-optical-sizing:auto;
+  -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; -webkit-tap-highlight-color:transparent;
+  padding-left:max(16px,env(safe-area-inset-left,0px)); padding-right:max(16px,env(safe-area-inset-right,0px));
+}
+button{font:inherit;color:inherit;letter-spacing:inherit;background:none;border:0;padding:0;margin:0;cursor:pointer;text-align:inherit}
+button:disabled{cursor:default}
+h1,h2,h3,p,ol,ul{margin:0}
+:focus-visible{outline:3px solid var(--water);outline-offset:2px;border-radius:12px}
+svg{display:block}
+
+/* ---------- Navigation bar ---------- */
+.ambient{
+  position:fixed; inset:0; z-index:-1; pointer-events:none;
+  background:
+    radial-gradient(62% 42% at 6% 0%, var(--amb-1), transparent 72%),
+    radial-gradient(50% 38% at 100% 10%, var(--amb-2), transparent 72%),
+    radial-gradient(55% 42% at 96% 76%, var(--amb-3), transparent 72%),
+    radial-gradient(62% 48% at 0% 100%, var(--amb-4), transparent 72%);
+}
+.nav{
+  position:fixed; z-index:20; top:0; left:0; right:0;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-left:max(16px,env(safe-area-inset-left,0px)); padding-right:max(16px,env(safe-area-inset-right,0px));
+}
+.nav::before{
+  content:""; position:absolute; inset:0 0 -26px; pointer-events:none; opacity:0; transition:opacity .25s;
+  background:linear-gradient(var(--bg-fade) 50%, transparent);
+  -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);
+  -webkit-mask-image:linear-gradient(#000 52%, transparent); mask-image:linear-gradient(#000 52%, transparent);
+}
+.nav.scrolled::before{opacity:1}
+.nav-in{position:relative;max-width:640px;margin:0 auto;height:52px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center}
+.nav-title{font-size:17px;font-weight:600;opacity:0;transition:opacity .2s}
+.nav.compact .nav-title{opacity:1}
+.nav-r{justify-self:end;display:flex}
+.txt-btn{color:var(--tint);font-size:17px;min-height:44px;padding-inline:6px;border-radius:10px}
+.txt-btn.strong{font-weight:600}
+.txt-btn:disabled{color:var(--label-3)}
+
+/* ---------- Liquid Glass · 4-layer composition (skill: liquid-glass) ----------
+   Layer 0 .lg-refract  backdrop blur + SVG displacement (Chromium) · Layer 1 .lg-tint
+   Layer 2 .lg-spec     specular rim                                · Layer 3 .lg-content */
+.lg-glass{position:relative;overflow:hidden;isolation:isolate;will-change:transform}
+.lg-refract,.lg-tint,.lg-spec{position:absolute;inset:0;border-radius:inherit;pointer-events:none}
+.lg-refract{
+  isolation:isolate;
+  -webkit-backdrop-filter:blur(var(--lg-blur,12px)) brightness(1.05) saturate(var(--lg-sat,1.4));
+  backdrop-filter:blur(var(--lg-blur,12px)) brightness(1.05) saturate(var(--lg-sat,1.4));
+}
+.lg .lg-refract{
+  -webkit-backdrop-filter:blur(var(--lg-blur,12px)) var(--lg-filter,) brightness(1.05) saturate(var(--lg-sat,1.4));
+  backdrop-filter:blur(var(--lg-blur,12px)) var(--lg-filter,) brightness(1.05) saturate(var(--lg-sat,1.4));
+}
+.lg-tint{background:var(--lg-tint,var(--glass-tint));transition:background-color .25s}
+.lg-spec{box-shadow:inset 0 1px 0 var(--glass-rim), inset 0 -1px 0 var(--glass-rim-2), inset 0 0 0 .5px var(--glass-hair)}
+.lg-content{position:relative;z-index:10}
+.glass-btn{min-height:44px;padding:0 18px;border-radius:999px;font-size:17px;font-weight:500;color:var(--label);box-shadow:var(--glass-shadow);--lg-blur:10px;transition:transform .25s cubic-bezier(.34,1.56,.64,1),color .2s}
+.glass-btn:active:not(:disabled){transform:scale(1.06)}
+.glass-btn:disabled{color:var(--label-3)}
+.glass-circle{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;color:var(--label);box-shadow:0 2px 8px rgba(0,0,0,.08);--lg-blur:8px;transition:transform .25s cubic-bezier(.34,1.56,.64,1)}
+.glass-circle:active:not(:disabled){transform:scale(1.08)}
+.glass-circle svg{width:15px;height:15px}
+.glass-circle.icon-lg svg{width:20px;height:20px}
+.glass-circle:disabled{color:var(--label-3);cursor:default}
+
+/* ---------- Page ---------- */
+.app{max-width:640px;margin:0 auto;padding-top:52px;padding-bottom:calc(116px + env(safe-area-inset-bottom,0px))}
+.view{display:flex;flex-direction:column;gap:28px;padding-top:2px}
+.head{display:flex;flex-direction:column;gap:2px;padding-inline:4px}
+.eyebrow{font-size:13px;line-height:18px;font-weight:600;color:var(--label-2);text-transform:uppercase;letter-spacing:.03em}
+.lt{font-family:var(--font-display);font-size:34px;line-height:41px;font-weight:700;letter-spacing:-.01em;text-wrap:balance}
+.grp{display:flex;flex-direction:column;gap:8px}
+.grp-h{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding-inline:4px}
+.grp-h h2{font-family:var(--font-display);font-size:22px;line-height:28px;font-weight:700;letter-spacing:-.012em;text-wrap:balance}
+.grp-h h3{font-size:15px;line-height:20px;font-weight:600;color:var(--label-2);padding-inline:12px}
+.aside{font-size:15px;color:var(--label-2);font-variant-numeric:tabular-nums;white-space:nowrap}
+.foot{font-size:13px;line-height:18px;color:var(--label-2);padding-inline:16px;max-width:62ch}
+.card{background:var(--card);border-radius:22px}
+.list{display:flex;flex-direction:column;overflow:hidden}
+.row{position:relative;display:flex;align-items:center;gap:12px;min-height:52px;padding:10px 16px;width:100%}
+.list>.row+.row::before{content:"";position:absolute;top:0;left:var(--inset,16px);right:0;border-top:1px solid var(--sep);transform:scaleY(.5);transform-origin:0 0}
+button.row:active{background:var(--fill-2)}
+.mtext{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.mtitle{font-size:17px;line-height:22px}
+.msub{font-size:15px;line-height:20px;color:var(--label-2)}
+.mkcal,.rval,.samt{font-size:17px;line-height:22px;color:var(--label-2);font-variant-numeric:tabular-nums;white-space:nowrap}
+.rval.strong{color:var(--label);font-weight:600}
+.chev{width:8px;height:14px;color:var(--label-3);flex:none}
+
+/* check rings (Reminders style) */
+.ring{width:26px;height:26px;border-radius:50%;border:2px solid var(--label-3);display:grid;place-items:center;flex:none;transition:background-color .2s,border-color .2s}
+.ring svg{width:14px;height:14px;stroke:var(--on-fill);opacity:0;transform:scale(.4);transition:opacity .2s,transform .25s cubic-bezier(.34,1.56,.64,1)}
+.check[aria-pressed="true"] .ring,.srow[aria-checked="true"] .ring{background:var(--ring-kcal);border-color:var(--ring-kcal)}
+.check[aria-pressed="true"] .ring svg,.srow[aria-checked="true"] .ring svg{opacity:1;transform:none}
+
+/* meal rows (Heute) */
+.mrow{padding:0;gap:0}
+.mrow:has(.mbtn:active){background:var(--fill-2)}
+.check{flex:none;width:52px;height:52px;margin-left:4px;display:grid;place-items:center;border-radius:50%}
+.mbtn{flex:1;min-width:0;display:flex;align-items:center;gap:10px;min-height:66px;padding:10px 16px 10px 0;text-align:left}
+.mrow.done .mtitle{color:var(--label-2)}
+
+/* ---------- Heute ---------- */
+.summary{display:flex;flex-direction:column;gap:18px;padding:20px}
+.sum-kcal{display:flex;flex-direction:column;gap:8px}
+.sum-rings{display:flex;align-items:center;gap:20px}
+.rings{width:124px;height:124px;flex:none}
+.rings circle{fill:none;stroke-width:14;stroke-linecap:round}
+.rings .trk{opacity:.2}
+.rings .prog{transition:stroke-dashoffset .8s cubic-bezier(.32,.72,0,1),opacity .2s}
+.kcal{display:flex;align-items:baseline;gap:6px;flex-wrap:wrap}
+.kcal-num{font-family:var(--font-round);font-size:34px;line-height:38px;font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.kcal-of{font-size:15px;color:var(--label-2);font-weight:500}
+.bar{height:6px;border-radius:3px;background:var(--fill);overflow:hidden}
+.bar>i{display:block;height:100%;width:0;border-radius:3px;background:var(--ring-kcal);transition:width .6s cubic-bezier(.32,.72,0,1)}
+.kcal-left{font-size:13px;line-height:18px;color:var(--label-2)}
+.macros{flex:1;min-width:0;list-style:none;padding:0;display:flex;flex-direction:column;gap:10px}
+.macros li{display:flex;flex-direction:column}
+.macro-l{display:flex;align-items:center;gap:6px;font-size:13px;line-height:18px;font-weight:600;color:var(--label-2)}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--c)}
+.macros b{font-family:var(--font-round);font-size:20px;line-height:25px;font-weight:600;letter-spacing:-.01em;font-variant-numeric:tabular-nums;white-space:nowrap}
+.macros small{font-family:var(--font);font-size:15px;font-weight:400;letter-spacing:-.012em;color:var(--label-2)}
+
+.water{padding:14px 16px 12px;display:flex;flex-direction:column;gap:10px}
+.water-top{display:flex;align-items:center;gap:12px}
+.water-val{font-size:17px;line-height:22px;font-weight:600;font-variant-numeric:tabular-nums}
+.water-val span{font-weight:400;color:var(--label-2)}
+.stepper{display:flex;align-items:center;height:32px;border-radius:999px;background:var(--fill);flex:none}
+.stepper button{width:46px;height:32px;display:grid;place-items:center;border-radius:999px;font-size:22px;line-height:1;font-weight:400}
+.stepper button:active{background:var(--fill)}
+.stepper button:disabled{color:var(--label-3)}
+.stepper i{width:1px;height:18px;background:var(--sep)}
+.glasses{display:grid;grid-template-columns:repeat(12,1fr);gap:4px}
+.cup{height:30px;display:grid;align-items:center;border-radius:6px}
+.cup::after{content:"";height:10px;border-radius:5px;background:var(--fill);transition:background-color .2s}
+.cup[aria-pressed="true"]::after{background:var(--water)}
+
+/* settings-style icon squares */
+.sq{width:30px;height:30px;border-radius:8px;background:var(--c);display:grid;place-items:center;flex:none;color:var(--on-fill)}
+.sq svg{width:19px;height:19px}
+
+/* ---------- Woche ---------- */
+.week{display:grid;grid-template-columns:repeat(7,1fr);gap:2px}
+.day{display:flex;flex-direction:column;align-items:center;gap:3px;padding-block:4px;border-radius:14px}
+.dl{font-size:13px;font-weight:600;color:var(--label-2)}
+.dn{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font-size:20px;font-weight:500;font-variant-numeric:tabular-nums;transition:background-color .2s,color .2s}
+.day.today .dn{color:var(--tint);font-weight:600}
+.day[aria-selected="true"] .dn{background:var(--label);color:var(--bg);font-weight:600}
+.day.today[aria-selected="true"] .dn{background:var(--tint);color:var(--on-tint)}
+.tdot{width:6px;height:6px;border-radius:50%;background:var(--protein)}
+.day:not(.train) .tdot{visibility:hidden}
+.legend{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--label-2);padding-inline:16px}
+.legend .tdot{display:inline-block}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);padding-block:14px}
+.stat{display:flex;flex-direction:column;align-items:center;gap:2px;position:relative;min-width:0}
+.stat+.stat::before{content:"";position:absolute;left:0;top:6px;bottom:6px;border-left:1px solid var(--sep);transform:scaleX(.5)}
+.stat-l{display:flex;align-items:center;gap:5px;font-size:12px;line-height:16px;font-weight:600;color:var(--label-2)}
+.stat-l .dot{width:8px;height:8px}
+.stat-v{font-family:var(--font-round);font-size:22px;line-height:28px;font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.stat-u{font-size:13px;line-height:16px;color:var(--label-2)}
+.wtime{width:48px;flex:none;font-size:15px;font-weight:600;color:var(--label-2);font-variant-numeric:tabular-nums}
+.wrow{min-height:66px}
+.daytitle{display:flex;flex-direction:column;gap:2px;padding-inline:4px}
+.daytitle h2{font-family:var(--font-display);font-size:22px;line-height:28px;font-weight:700}
+.daytitle p{font-size:15px;color:var(--label-2)}
+
+/* ---------- Einkauf ---------- */
+.seg{position:relative;display:grid;grid-template-columns:repeat(3,1fr);padding:3px;border-radius:999px;background:var(--fill)}
+.seg-thumb{position:absolute;top:3px;bottom:3px;left:3px;width:calc((100% - 6px) / 3);border-radius:999px;--lg-tint:var(--seg-thumb);
+  box-shadow:0 3px 10px rgba(0,0,0,.12);
+  transform:translateX(calc(var(--i,0) * 100%)); transition:transform .5s cubic-bezier(.34,1.35,.64,1)}
+.seg button{position:relative;z-index:1;height:34px;border-radius:999px;font-size:14px;font-weight:600;text-align:center}
+.progress{padding:14px 16px;display:flex;flex-direction:column;gap:10px}
+.progress-top{display:flex;justify-content:space-between;align-items:baseline;gap:12px;font-size:15px}
+.progress-top b{font-weight:600;font-variant-numeric:tabular-nums}
+.srow{min-height:58px}
+.srow[aria-checked="true"] .mtitle{color:var(--label-2)}
+.basics{padding:14px 16px;font-size:15px;line-height:21px;color:var(--label-2)}
+.basics b{display:block;color:var(--label);font-weight:600;font-size:17px;margin-bottom:4px}
+
+/* ---------- Ziele ---------- */
+.profile{display:flex;align-items:center;gap:14px;padding:16px}
+.avatar{width:60px;height:60px;border-radius:50%;background:linear-gradient(180deg,var(--avatar-a),var(--avatar-b));display:grid;place-items:center;color:var(--on-fill);flex:none}
+.avatar svg{width:34px;height:34px}
+.profile .mtitle{font-size:20px;line-height:25px;font-weight:600}
+.dist-wrap{padding:16px 16px 6px;display:flex;flex-direction:column;gap:8px}
+.dist{display:flex;gap:3px;height:12px}
+.dist i{border-radius:6px;background:var(--c)}
+.dist-cap{display:flex;justify-content:space-between;font-size:13px;color:var(--label-2);font-variant-numeric:tabular-nums}
+.ziele-row .msub{text-wrap:pretty}
+
+/* ---------- Tab bar (floating glass) ---------- */
+.tabbar{
+  position:fixed; z-index:25;
+  left:max(16px,env(safe-area-inset-left,0px)); right:max(16px,env(safe-area-inset-right,0px));
+  bottom:calc(14px + env(safe-area-inset-bottom,0px));
+  max-width:420px; margin-inline:auto;
+  display:grid; grid-template-columns:repeat(4,1fr); gap:2px; padding:5px;
+  border-radius:999px; --lg-blur:14px; --lg-sat:1.5; touch-action:none; box-shadow:var(--glass-shadow);
+}
+/* active tab = nested inner glass bubble (template: glass-pill-navbar) */
+.tab-ind{
+  position:absolute; z-index:1; top:5px; left:0; height:54px; width:var(--tw,0px); border-radius:999px;
+  --lg-tint:var(--drop-tint); pointer-events:none; transform:translateX(var(--tx,5px));
+  transition:transform .5s cubic-bezier(.34,1.35,.64,1), box-shadow .2s;
+}
+.tab-ind .lg-refract{-webkit-backdrop-filter:blur(8px) brightness(1.2);backdrop-filter:blur(8px) brightness(1.2)}
+.tab-ind .lg-spec{box-shadow:inset 0 1px 0 var(--glass-rim), inset 0 -1px 0 var(--glass-rim-2)}
+.tab-ind.lifted{z-index:20; --lg-tint:var(--glass-drop); transform:translateX(var(--tx)) scale(1.2); box-shadow:0 8px 22px rgba(0,0,0,.16)}
+.lg .tab-ind.lifted .lg-refract{
+  -webkit-backdrop-filter:blur(.5px) var(--lg-filter,) brightness(1.08) saturate(1.3);
+  backdrop-filter:blur(.5px) var(--lg-filter,) brightness(1.08) saturate(1.3);
+}
+.tabbar.dragging .tab-ind{transition:transform .07s linear, box-shadow .2s}
+.tab{position:relative;z-index:10;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;height:54px;border-radius:999px;font-size:10px;line-height:12px;font-weight:600;letter-spacing:.01em;color:var(--label);transition:color .2s}
+.tab svg{width:26px;height:26px}
+.tab[aria-selected="true"]{color:var(--tint)}
+
+/* ---------- Sheet ---------- */
+.scrim{position:fixed;inset:0;z-index:40;background:var(--scrim);opacity:0;transition:opacity .35s}
+.scrim.open{opacity:1}
+.sheet{
+  position:fixed; z-index:41; margin-inline:auto; max-width:640px;
+  left:max(8px,env(safe-area-inset-left,0px)); right:max(8px,env(safe-area-inset-right,0px));
+  bottom:calc(8px + env(safe-area-inset-bottom,0px));
+  max-height:calc(100% - 36px - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px));
+  display:flex; flex-direction:column; overflow:hidden; --lg-tint:var(--sheet-glass); --lg-blur:36px;
+  border-radius:36px; box-shadow:var(--glass-shadow);
+  transform:translateY(calc(100% + 48px)); transition:transform .5s cubic-bezier(.32,.72,0,1);
+}
+.sheet.open{transform:none}
+.sheet-grip,.sheet-body{position:relative;z-index:10}
+.sheet .card{background:var(--sheet-card)}
+.sheet-grip{touch-action:none;cursor:grab;flex:none}
+.grabber{width:36px;height:5px;border-radius:3px;background:var(--label-3);margin:6px auto 0}
+.sheet-bar{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;min-height:52px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.sheet-bar-title{font-size:17px;font-weight:600}
+.sheet-bar .glass-circle{justify-self:end}
+.sheet-body{
+  overflow-y:auto; overscroll-behavior:contain;
+  padding-top:4px; padding-bottom:24px;
+  padding-left:max(16px,env(safe-area-inset-left,0px)); padding-right:max(16px,env(safe-area-inset-right,0px));
+  display:flex; flex-direction:column; gap:22px;
+}
+.sheet-head{display:flex;flex-direction:column;gap:6px;padding-inline:4px}
+.sheet-title{font-family:var(--font-display);font-size:28px;line-height:34px;font-weight:700;letter-spacing:-.012em;text-wrap:balance}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+.chip{display:inline-flex;align-items:center;gap:5px;height:28px;padding:0 11px;border-radius:999px;background:var(--fill);font-size:13px;font-weight:600}
+.chip svg{width:14px;height:14px}
+.amt{display:flex;flex-direction:column;align-items:flex-end;gap:1px;text-align:right}
+.amt .samt{color:var(--label)}
+.amt small{font-size:13px;color:var(--label-2);font-variant-numeric:tabular-nums;white-space:nowrap}
+.steps{list-style:none;padding:6px 16px;display:flex;flex-direction:column;counter-reset:st}
+.steps li{counter-increment:st;display:grid;grid-template-columns:28px 1fr;gap:12px;padding-block:10px;font-size:17px;line-height:23px;position:relative}
+.steps li+li::before{content:"";position:absolute;top:0;left:40px;right:0;border-top:1px solid var(--sep);transform:scaleY(.5)}
+.steps li::after{content:counter(st);grid-column:1;grid-row:1;width:26px;height:26px;border-radius:50%;background:var(--fill);display:grid;place-items:center;font-size:14px;font-weight:600;font-variant-numeric:tabular-nums}
+.steps li span{grid-column:2;grid-row:1}
+.btn-primary{display:block;width:100%;min-height:52px;border-radius:999px;color:var(--on-tint);font-size:17px;font-weight:600;text-align:center;
+  --lg-tint:color-mix(in srgb, var(--tint) 92%, transparent); --lg-blur:8px;
+  box-shadow:0 8px 20px color-mix(in srgb, var(--tint) 30%, transparent);
+  transition:transform .25s cubic-bezier(.34,1.56,.64,1),box-shadow .2s}
+.btn-primary .lg-content{display:flex;align-items:center;justify-content:center;gap:8px;min-height:52px}
+.btn-primary:active{transform:scale(1.03)}
+.btn-primary.on{--lg-tint:var(--fill);color:var(--tint);box-shadow:none}
+.btn-primary svg{width:18px;height:18px}
+
+/* ---------- Profiles ---------- */
+button{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+.lt-row{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.avatar-btn{
+  width:38px;height:38px;border-radius:50%;flex:none;display:grid;place-items:center;
+  font-size:16px;font-weight:600;letter-spacing:0;color:var(--on-fill);
+  background:linear-gradient(180deg,color-mix(in srgb,var(--c,var(--i-green)) 75%,#fff),var(--c,var(--i-green)));
+  box-shadow:0 2px 8px rgba(0,0,0,.14), inset 0 1px 0 rgba(255,255,255,.35);
+  transition:transform .25s cubic-bezier(.34,1.56,.64,1);
+}
+.avatar-btn:active{transform:scale(1.08)}
+.avatar-sm,.avatar-lg{
+  border-radius:50%;display:grid;place-items:center;flex:none;font-weight:600;color:var(--on-fill);
+  background:linear-gradient(180deg,color-mix(in srgb,var(--c) 75%,#fff),var(--c));
+}
+.avatar-sm{width:40px;height:40px;font-size:17px}
+.avatar-lg{width:60px;height:60px;font-size:26px}
+button.profile{width:100%;text-align:left}
+button.profile:active{background:color-mix(in srgb,var(--card) 92%,var(--label))}
+.prow{padding:0;gap:0}
+.prow:has(.pselect:active){background:var(--fill-2)}
+.pselect{flex:1;min-width:0;display:flex;align-items:center;gap:12px;min-height:72px;padding:10px 4px 10px 16px;text-align:left}
+.pcheck{width:20px;height:20px;color:var(--tint);flex:none}
+.info-btn{width:52px;height:52px;flex:none;display:grid;place-items:center;color:var(--tint);border-radius:50%}
+.info-btn svg{width:23px;height:23px}
+.add-row .mtitle{color:var(--tint);font-weight:500}
+.plus-c{width:40px;height:40px;border-radius:50%;background:var(--fill);display:grid;place-items:center;flex:none;color:var(--tint)}
+.plus-c svg{width:20px;height:20px}
+.sheet-intro{font-size:15px;line-height:21px;color:var(--label-2);max-width:52ch}
+#sheetLeft{justify-self:start;display:flex}
+
+/* ---------- Profile form ---------- */
+.pform{display:flex;flex-direction:column;gap:18px}
+.frow{min-height:52px}
+.frow.stack{flex-direction:column;align-items:stretch;gap:8px;padding-block:12px}
+.frow:focus-within{background:var(--fill-2)}
+.flabel{flex:none;width:92px;font-size:17px;line-height:22px}
+.frow.stack .flabel{width:auto;font-size:13px;line-height:18px;font-weight:600;color:var(--label-2);text-transform:uppercase;letter-spacing:.03em}
+.finput{flex:1;min-width:0;display:flex;align-items:center;justify-content:flex-end;gap:6px}
+.finput b{font-weight:600;font-variant-numeric:tabular-nums}
+.finput input,.ftext{
+  font:inherit;font-size:17px;letter-spacing:inherit;color:var(--label);background:none;border:0;border-radius:0;
+  outline:none;padding:6px 0;min-width:0;-webkit-appearance:none;appearance:none;
+}
+.finput input{width:4.2em;text-align:right;font-variant-numeric:tabular-nums}
+.ftext{flex:1;text-align:right}
+.ftext::placeholder{color:var(--label-3)}
+.unit{color:var(--label-2);font-size:17px;white-space:nowrap}
+.finput input[aria-invalid="true"],.ftext[aria-invalid="true"]{color:var(--i-red)}
+.frow:has([aria-invalid="true"]) .flabel{color:var(--i-red)}
+.seg-form{grid-template-columns:repeat(var(--n),1fr)}
+.seg-form button{transition:background-color .2s,box-shadow .2s}
+.seg-form button[aria-checked="true"]{background:var(--seg-on);box-shadow:0 3px 10px rgba(0,0,0,.12), inset 0 1px 0 var(--glass-rim)}
+.preview{padding:14px 16px;display:flex;flex-wrap:wrap;gap:6px 16px;font-size:15px;line-height:20px;color:var(--label-2)}
+.preview b{color:var(--label);font-weight:600;font-variant-numeric:tabular-nums}
+.err{color:var(--i-red)}
+.err:empty{display:none}
+.btn-danger{width:100%;min-height:50px;border-radius:999px;background:var(--fill);color:var(--i-red);font-size:17px;font-weight:600;text-align:center;transition:background-color .2s,color .2s}
+.btn-danger.armed{background:var(--i-red);color:var(--on-fill)}
+.btn-danger:disabled{color:var(--label-3)}
+
+@media (max-width:360px){
+  .rings{width:104px;height:104px}
+  .stat-v{font-size:19px}
+}
+@media (prefers-reduced-transparency: reduce){
+  .lg-refract,.nav::before{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+  .lg-tint{background:var(--card)!important}
+  .btn-primary .lg-tint{background:var(--tint)!important}
+  .nav::before{background:var(--bg)}
+  .ambient{display:none}
+}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{transition-duration:.01ms!important;animation:none!important}
+}
+</style>
+</head>
+<body>
+<div class="ambient" aria-hidden="true"></div>
+<header class="nav" id="nav">
+  <div class="nav-in">
+    <div></div>
+    <div class="nav-title" id="navTitle">Heute</div>
+    <div class="nav-r" id="navRight">
+      <button class="lg-glass glass-btn" id="goToday" hidden><span class="lg-refract"></span><span class="lg-tint"></span><span class="lg-spec"></span><span class="lg-content">Heute</span></button>
+      <button class="lg-glass glass-circle icon-lg" id="shopReset" aria-label="Alle Häkchen zurücksetzen" hidden><span class="lg-refract"></span><span class="lg-tint"></span><span class="lg-spec"></span><svg class="lg-content" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.6 12a7.4 7.4 0 1 0 2.2-5.25M4.6 4.4v4.1h4.1" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    </div>
+  </div>
+</header>
+
+<div class="app">
+
+  <!-- ============ HEUTE ============ -->
+  <section class="view" id="v-heute" data-tab="heute" aria-label="Heute">
+    <div class="head">
+      <p class="eyebrow" id="hEyebrow">Heute</p>
+      <div class="lt-row"><h1 class="lt">Heute</h1><button class="avatar-btn" data-profiles aria-label="Profile anzeigen">?</button></div>
+    </div>
+
+    <div class="card summary">
+      <div class="sum-kcal">
+        <div class="kcal"><span class="kcal-num" id="kNum">0</span><span class="kcal-of" id="kOf">von 2.900 kcal</span></div>
+        <div class="bar" aria-hidden="true"><i id="kBar"></i></div>
+        <p class="kcal-left" id="kLeft">Noch 2.900 kcal</p>
+      </div>
+      <div class="sum-rings">
+        <svg class="rings" id="rings" viewBox="0 0 140 140" role="img" aria-label="Fortschritt der Makronährstoffe">
+          <g transform="rotate(-90 70 70)">
+            <circle class="trk" cx="70" cy="70" r="62" style="stroke:var(--protein)"/>
+            <circle class="prog" id="rP" cx="70" cy="70" r="62" style="stroke:var(--protein)"/>
+            <circle class="trk" cx="70" cy="70" r="45" style="stroke:var(--carbs)"/>
+            <circle class="prog" id="rC" cx="70" cy="70" r="45" style="stroke:var(--carbs)"/>
+            <circle class="trk" cx="70" cy="70" r="28" style="stroke:var(--fat)"/>
+            <circle class="prog" id="rF" cx="70" cy="70" r="28" style="stroke:var(--fat)"/>
+          </g>
+        </svg>
+        <ul class="macros">
+          <li><span class="macro-l"><span class="dot" style="--c:var(--protein)"></span>Protein</span><b id="vP">0 <small>/ 165 g</small></b></li>
+          <li><span class="macro-l"><span class="dot" style="--c:var(--carbs)"></span>Kohlenhydrate</span><b id="vC">0 <small>/ 375 g</small></b></li>
+          <li><span class="macro-l"><span class="dot" style="--c:var(--fat)"></span>Fett</span><b id="vF">0 <small>/ 75 g</small></b></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="grp">
+      <div class="grp-h"><h2>Mahlzeiten</h2><span class="aside" id="hPlan"></span></div>
+      <div class="card list" id="hMeals"></div>
+      <p class="foot" id="hFoot"></p>
+    </div>
+
+    <div class="grp">
+      <div class="grp-h"><h2>Wasser</h2></div>
+      <div class="card water">
+        <div class="water-top">
+          <span class="sq" style="--c:var(--i-blue)" aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2.8c3.4 4.3 6.2 7.6 6.2 11.2a6.2 6.2 0 0 1-12.4 0C5.8 10.4 8.6 7.1 12 2.8z"/></svg></span>
+          <div class="mtext">
+            <div class="water-val" id="wVal">0 <span>von 3 l</span></div>
+            <div class="msub" id="wSub">0 von 12 Gläsern à 250 ml</div>
+          </div>
+          <div class="stepper">
+            <button id="wMinus" aria-label="Ein Glas weniger">−</button><i></i><button id="wPlus" aria-label="Ein Glas mehr">+</button>
+          </div>
+        </div>
+        <div class="glasses" id="glasses" role="group" aria-label="Gläser Wasser"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ WOCHE ============ -->
+  <section class="view" id="v-woche" data-tab="woche" aria-label="Woche" hidden>
+    <div class="head">
+      <p class="eyebrow" id="wkEyebrow">Wochenplan</p>
+      <div class="lt-row"><h1 class="lt">Woche</h1><button class="avatar-btn" data-profiles aria-label="Profile anzeigen">?</button></div>
+    </div>
+    <div class="grp">
+      <div class="week" id="week" role="tablist" aria-label="Wochentag"></div>
+      <p class="legend"><span class="tdot"></span>Trainingstag</p>
+    </div>
+    <div class="grp">
+      <div class="daytitle"><h2 id="dTitle">Montag</h2><p id="dSub"></p></div>
+      <div class="card stats" id="dStats"></div>
+    </div>
+    <div class="grp">
+      <div class="card list" id="dMeals"></div>
+      <p class="foot" id="wFoot"></p>
+    </div>
+  </section>
+
+  <!-- ============ EINKAUF ============ -->
+  <section class="view" id="v-einkauf" data-tab="einkauf" aria-label="Einkauf" hidden>
+    <div class="head">
+      <p class="eyebrow" id="shopEyebrow">Mengen für 1 Person</p>
+      <div class="lt-row"><h1 class="lt">Einkaufsliste</h1><button class="avatar-btn" data-profiles aria-label="Profile anzeigen">?</button></div>
+    </div>
+    <div class="grp">
+      <div class="seg" id="shopSeg" role="tablist" aria-label="Zeitraum">
+        <span class="seg-thumb lg-glass" id="segThumb" aria-hidden="true"><span class="lg-tint"></span><span class="lg-spec"></span></span>
+        <button role="tab" data-scope="all" id="seg-all">Ganze Woche</button>
+        <button role="tab" data-scope="a" id="seg-a">Mo – Mi</button>
+        <button role="tab" data-scope="b" id="seg-b">Do – So</button>
+      </div>
+      <p class="foot" id="shopNote"></p>
+    </div>
+    <div class="card progress">
+      <div class="progress-top"><span>Im Wagen</span><b id="shopCount">0 von 0</b></div>
+      <div class="bar" aria-hidden="true"><i id="shopBar"></i></div>
+    </div>
+    <div id="shopLists" style="display:flex;flex-direction:column;gap:24px"></div>
+    <div class="card basics">
+      <b>Gewürze &amp; Basics</b>
+      Salz, Pfeffer, Paprikapulver, Kreuzkümmel, Chiliflocken, Currypulver, Oregano, Majoran, Muskat, Zimt, Rosmarin, Dill, Schnittlauch, Essig, Gemüsebrühe, Knoblauch und frischer Ingwer. Kauf nach, was fehlt.
+    </div>
+  </section>
+
+  <!-- ============ ZIELE ============ -->
+  <section class="view" id="v-ziele" data-tab="ziele" aria-label="Ziele" hidden>
+    <div class="head">
+      <p class="eyebrow" id="zEyebrow">Ziele</p>
+      <div class="lt-row"><h1 class="lt">Ziele</h1><button class="avatar-btn" data-profiles aria-label="Profile anzeigen">?</button></div>
+    </div>
+    <div id="zBody" style="display:contents"></div>
+  </section>
+</div>
+
+<nav class="tabbar lg-glass" id="tabbar" role="tablist" aria-label="Bereiche">
+  <span class="lg-refract"></span><span class="lg-tint"></span><span class="lg-spec"></span>
+  <span class="tab-ind lg-glass" id="tabInd" aria-hidden="true"><span class="lg-refract"></span><span class="lg-tint"></span><span class="lg-spec"></span></span>
+  <button class="tab" role="tab" data-tab="heute" aria-controls="v-heute">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 3v5.5a2.5 2.5 0 0 0 5 0V3M9 3v18M17.5 21V3c-2.4 1.6-3.5 4.4-3.5 7.5V13h3.5"/></svg>
+    <span>Heute</span>
+  </button>
+  <button class="tab" role="tab" data-tab="woche" aria-controls="v-woche">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="3.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>
+    <span>Woche</span>
+  </button>
+  <button class="tab" role="tab" data-tab="einkauf" aria-controls="v-einkauf">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 4h2.4l2.4 11.2h10.9l2.1-8.2H6"/><circle cx="9" cy="19.3" r="1.4"/><circle cx="17" cy="19.3" r="1.4"/></svg>
+    <span>Einkauf</span>
+  </button>
+  <button class="tab" role="tab" data-tab="ziele" aria-controls="v-ziele">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.8"/><circle cx="12" cy="12" r="1.3" fill="currentColor"/></svg>
+    <span>Ziele</span>
+  </button>
+</nav>
+
+<div class="scrim" id="scrim" hidden></div>
+<section class="sheet lg-glass" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle" hidden>
+  <span class="lg-refract"></span><span class="lg-tint"></span><span class="lg-spec"></span>
+  <div class="sheet-grip" id="sheetGrip">
+    <div class="grabber" aria-hidden="true"></div>
+    <div class="sheet-bar">
+      <span id="sheetLeft"></span>
+      <span class="sheet-bar-title" id="sheetBarTitle"></span>
+      <button class="lg-glass glass-circle" id="sheetDone" aria-label="Schließen"><span class="lg-refract"></span><span class="lg-tint"></span><span class="lg-spec"></span><svg class="lg-content" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 3l10 10M13 3 3 13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></button>
+    </div>
+  </div>
+  <div class="sheet-body" id="sheetBody"></div>
+</section>
+
+<script>
+const ING = {
+  hafer:     {n:"Haferflocken", cat:"vorrat", k:370, p:13.5, c:58.7, f:7, pack:[500,"Pck. à 500 g"]},
+  milch:     {n:"Milch 1,5 %", cat:"kuehl", k:47, p:3.4, c:4.8, f:1.5, ml:true, pack:[1000,"Liter"]},
+  skyr:      {n:"Skyr natur", cat:"kuehl", k:63, p:11, c:4, f:0.2, pack:[450,"Becher à 450 g"]},
+  quark:     {n:"Magerquark", cat:"kuehl", k:67, p:12, c:4, f:0.3, pack:[500,"Becher à 500 g"]},
+  huette:    {n:"Körniger Frischkäse", cat:"kuehl", k:92, p:12, c:2.5, f:4, pack:[200,"Becher à 200 g"]},
+  eier:      {n:"Eier (Größe M)", cat:"kuehl", k:145, p:12.5, c:0.7, f:10, pc:[55,"Stück","Stück"]},
+  kaese:     {n:"Käse light (z. B. Gouda 30 %)", cat:"kuehl", k:270, p:30, c:0, f:16},
+  feta:      {n:"Feta", cat:"kuehl", k:260, p:17, c:0.5, f:21, pack:[200,"Pck. à 200 g"]},
+  parmesan:  {n:"Parmesan", cat:"kuehl", k:390, p:33, c:0, f:28},
+  pute:      {n:"Putenbrust-Aufschnitt", cat:"kuehl", k:100, p:20, c:1, f:1.8, pack:[100,"Pck. à 100 g"]},
+  butter:    {n:"Butter", cat:"kuehl", k:741, p:0.7, c:0.6, f:83},
+  haehnchen: {n:"Hähnchenbrustfilet", cat:"fleisch", k:110, p:23.5, c:0, f:1.2},
+  rind:      {n:"Rinderhack, mager (≈ 5 % Fett)", cat:"fleisch", k:135, p:21, c:0, f:5.5},
+  lachs:     {n:"Lachsfilet", cat:"tk", k:200, p:20, c:0, f:13, pc:[125,"Filet","Filets"]},
+  seelachs:  {n:"Seelachsfilet", cat:"tk", k:80, p:18, c:0, f:0.9, pc:[125,"Filet","Filets"]},
+  thunfisch: {n:"Thunfisch im eigenen Saft", cat:"vorrat", k:110, p:25, c:0, f:1, pc:[150,"Dose","Dosen"], note:"Abtropfgewicht"},
+  reis:      {n:"Basmatireis", cat:"vorrat", k:350, p:7.5, c:77, f:0.6, pack:[1000,"Pck. à 1 kg"]},
+  nudeln:    {n:"Vollkornnudeln", cat:"vorrat", k:350, p:13, c:64, f:2.5, pack:[500,"Pck. à 500 g"]},
+  linsen:    {n:"Rote Linsen", cat:"vorrat", k:340, p:25, c:50, f:1.5, pack:[500,"Pck. à 500 g"]},
+  kidney:    {n:"Kidneybohnen", cat:"vorrat", k:95, p:7, c:13, f:0.5, pack:[250,"Dose (250 g abgetropft)"]},
+  mais:      {n:"Mais", cat:"vorrat", k:85, p:2.5, c:16, f:1.2, pack:[140,"Dose (140 g abgetropft)"]},
+  passata:   {n:"Passierte Tomaten", cat:"vorrat", k:32, p:1.4, c:5, f:0.2, pack:[500,"Pck. à 500 g"]},
+  kokos:     {n:"Kokosmilch light", cat:"vorrat", k:100, p:1, c:2, f:10, ml:true, pack:[400,"Dose à 400 ml"]},
+  erdnuss:   {n:"Erdnussmus (100 % Erdnuss)", cat:"vorrat", k:610, p:25, c:12, f:50},
+  mandeln:   {n:"Mandeln", cat:"vorrat", k:600, p:22, c:6, f:52},
+  honig:     {n:"Honig", cat:"vorrat", k:304, p:0.3, c:80, f:0},
+  oel:       {n:"Raps- oder Olivenöl", cat:"vorrat", k:884, p:0, c:0, f:100},
+  soja:      {n:"Sojasoße", cat:"vorrat", k:55, p:6, c:7, f:0},
+  reiswaffel:{n:"Reiswaffeln", cat:"vorrat", k:390, p:8, c:81, f:3, pc:[8,"Stück","Stück"]},
+  brot:      {n:"Vollkornbrot", cat:"brot", k:215, p:7.5, c:38, f:1.5, pc:[50,"Scheibe","Scheiben"]},
+  wrap:      {n:"Weizen-Wraps", cat:"brot", k:300, p:8.5, c:50, f:7, pc:[60,"Stück","Stück"]},
+  banane:    {n:"Bananen", cat:"obst", k:93, p:1.1, c:20, f:0.2, pc:[120,"Stück","Stück"]},
+  apfel:     {n:"Äpfel", cat:"obst", k:54, p:0.3, c:12, f:0.2, pc:[150,"Stück","Stück"]},
+  orange:    {n:"Orangen", cat:"obst", k:47, p:1, c:9, f:0.2, pc:[150,"Stück","Stück"]},
+  beeren:    {n:"Beerenmischung", cat:"tk", k:45, p:1, c:8, f:0.4},
+  brokkoli:  {n:"Brokkoli", cat:"obst", k:34, p:3, c:4, f:0.4},
+  paprika:   {n:"Paprika", cat:"obst", k:30, p:1, c:6, f:0.3, pc:[150,"Schote","Schoten"]},
+  tomate:    {n:"Tomaten", cat:"obst", k:18, p:0.9, c:3, f:0.2, pc:[100,"Stück","Stück"]},
+  gurke:     {n:"Salatgurke", cat:"obst", k:12, p:0.6, c:1.8, f:0.1, pc:[400,"Stück","Stück"]},
+  zwiebel:   {n:"Zwiebeln", cat:"obst", k:40, p:1.1, c:9, f:0.1, pc:[100,"Stück","Stück"]},
+  kartoffeln:{n:"Kartoffeln, festkochend", cat:"obst", k:72, p:2, c:15.5, f:0.1},
+  kuerbis:   {n:"Hokkaido-Kürbis", cat:"obst", k:63, p:1.7, c:12.6, f:0.6},
+  spinat:    {n:"Blattspinat", cat:"tk", k:23, p:2.9, c:1.5, f:0.4},
+  tofu:      {n:"Tofu natur", cat:"kuehl", k:130, p:14, c:1.5, f:7.5, pack:[200,"Pck. à 200 g"]},
+  halloumi:  {n:"Halloumi", cat:"kuehl", k:320, p:22, c:2, f:25, pack:[225,"Pck. à 225 g"]},
+  hartkaese: {n:"Hartkäse, vegetarisch (Grana-Art)", cat:"kuehl", k:390, p:32, c:0, f:29},
+  sojagranulat:{n:"Sojagranulat", cat:"vorrat", k:340, p:50, c:12, f:1.5, pack:[250,"Pck. à 250 g"]},
+  kichererbsen:{n:"Kichererbsen", cat:"vorrat", k:120, p:7, c:16, f:2.5, pack:[240,"Dose (240 g abgetropft)"]}
+};
+
+const MEALS = {
+  B1:{n:"Overnight Oats mit Beeren & Erdnussmus", min:5, tags:["Am Vorabend"], ing:[["hafer",90],["milch",250],["skyr",50],["beeren",125],["erdnuss",20,"1 EL"],["honig",10,"1 TL"]],
+      steps:["Haferflocken, Milch und Skyr in einem Glas oder einer Dose verrühren.","Beeren gefroren darauf geben, verschließen und über Nacht in den Kühlschrank stellen.","Morgens umrühren, Erdnussmus und Honig darüber geben."]},
+  B2:{n:"Rührei auf Vollkornbrot mit Käse & Tomate", min:10, tags:[], ing:[["eier",110],["brot",150],["kaese",30,"1 Scheibe"],["tomate",100],["oel",5,"1 TL"],["orange",150]],
+      steps:["2 Eier mit Salz und Pfeffer verquirlen.","Öl in einer Pfanne erhitzen, Eier bei mittlerer Hitze unter Rühren stocken lassen.","Brot mit Käse belegen, Rührei und Tomatenscheiben darauf geben.","Die Orange dazu essen."]},
+  B3:{n:"Quark-Bowl mit Hafer, Banane & Mandeln", min:5, tags:[], ing:[["quark",150],["milch",100],["hafer",60],["banane",120],["mandeln",25],["honig",10,"1 TL"]],
+      steps:["Quark mit Milch glatt rühren.","Haferflocken unterheben, Banane in Scheiben darauf legen.","Mandeln grob hacken, darüber streuen und mit Honig süßen."]},
+  B4:{n:"Hafer-Pancakes mit Beeren", min:20, tags:["Wochenende"], ing:[["hafer",70],["eier",110],["quark",50],["banane",100],["milch",80],["oel",5,"1 TL"],["beeren",100],["honig",10,"1 TL"]],
+      steps:["Haferflocken, Eier, Quark, Banane und Milch im Mixer zu einem dicken Teig pürieren.","Öl in einer beschichteten Pfanne erhitzen, pro Pancake 2 EL Teig hineingeben.","Bei mittlerer Hitze 2 Minuten backen, wenden und 1 Minute fertig backen.","Beeren in der Mikrowelle oder im Topf kurz erwärmen und mit Honig über die Pancakes geben."]},
+
+  S1:{n:"Skyr mit Apfel & Mandeln", min:3, tags:[], ing:[["skyr",150],["apfel",150],["hafer",20],["mandeln",15]],
+      steps:["Apfel in Würfel schneiden.","Mit Skyr und Haferflocken mischen, Mandeln darüber streuen. Mit Zimt würzen, wenn du magst."]},
+  S2:{n:"Vollkornbrot mit Frischkäse & Gurke", min:5, tags:[], ing:[["brot",100],["huette",150],["gurke",100]],
+      steps:["Körnigen Frischkäse mit Salz, Pfeffer und Schnittlauch würzen.","Auf das Brot streichen und mit Gurkenscheiben belegen."]},
+  S3:{n:"Puten-Wrap mit Paprika", min:5, tags:["Zum Mitnehmen"], ing:[["wrap",60],["pute",80],["huette",50],["paprika",75]],
+      steps:["Wrap mit körnigem Frischkäse bestreichen.","Mit Putenbrust und Paprikastreifen belegen, fest einrollen und halbieren."]},
+  S4:{n:"Reiswaffeln mit Erdnussmus & Banane", min:3, tags:["Zum Mitnehmen"], ing:[["reiswaffel",32],["erdnuss",20,"1 EL"],["banane",120]],
+      steps:["Reiswaffeln dünn mit Erdnussmus bestreichen.","Banane in Scheiben schneiden und darauf legen."]},
+
+  P1:{n:"Bananen-Hafer-Shake", min:5, tags:["Mixer"], ing:[["milch",250],["hafer",40],["banane",100],["quark",100],["honig",10,"1 TL"]],
+      steps:["Alle Zutaten in den Mixer geben.","30 Sekunden auf höchster Stufe mixen und sofort trinken."]},
+  P2:{n:"Quark mit Beeren & Haferflocken", min:3, tags:[], ing:[["quark",150],["beeren",150],["hafer",60],["honig",10,"1 TL"]],
+      steps:["Beeren antauen lassen oder 1 Minute in der Mikrowelle erwärmen.","Mit Quark und Haferflocken verrühren und mit Honig süßen."]},
+
+  L1:{n:"Teriyaki-Hähnchen-Bowl", min:15, tags:["Meal Prep"], prep:"Sonntag", ing:[["reis",110],["haehnchen",120],["brokkoli",150],["paprika",100],["oel",10,"1 EL"],["soja",20,"1½ EL"],["honig",10,"1 TL"]],
+      steps:["Meal Prep am Sonntag: Reis für 3 Portionen nach Packungsangabe kochen.","Hähnchen in Würfel schneiden und in Öl rundum 6–8 Minuten anbraten.","Brokkoli und Paprika dazugeben und 4 Minuten mitbraten.","Sojasoße, Honig, 1 TL geriebenen Ingwer und 1 gepresste Knoblauchzehe verrühren, dazugeben und kurz einkochen.","Auf 3 Dosen verteilen, abkühlen lassen und in den Kühlschrank stellen. Mittags 2–3 Minuten in der Mikrowelle erhitzen."]},
+  L2:{n:"Chili con Carne mit Reis", min:15, tags:["Meal Prep"], prep:"Mittwoch", ing:[["rind",120],["kidney",125],["mais",70],["passata",200],["zwiebel",50],["paprika",75],["reis",75],["oel",5,"1 TL"]],
+      steps:["Meal Prep am Mittwochabend: Reis für 3 Portionen kochen.","Zwiebel würfeln und in Öl glasig dünsten, Hackfleisch dazugeben und krümelig braten.","Paprika würfeln und mitbraten. Mit Kreuzkümmel, Paprikapulver, Chili, Salz und Pfeffer würzen.","Passata, Kidneybohnen und Mais dazugeben und 15 Minuten köcheln lassen.","Mit Reis auf 3 Dosen verteilen. Hält im Kühlschrank bis Samstag."]},
+  L3:{n:"Spaghetti Bolognese", min:25, tags:["Sonntag"], ing:[["nudeln",110],["rind",100],["passata",250],["zwiebel",50],["parmesan",15],["oel",5,"1 TL"]],
+      steps:["Nudelwasser aufsetzen und kräftig salzen.","Zwiebel würfeln, in Öl andünsten, Hackfleisch krümelig anbraten.","Passata dazugeben, mit Oregano, Salz und Pfeffer würzen und 15 Minuten köcheln lassen.","Nudeln nach Packungsangabe kochen, mit der Soße mischen und Parmesan darüber reiben."]},
+
+  D1:{n:"Lachs mit Ofenkartoffeln & Brokkoli", min:30, tags:["Ofen"], ing:[["lachs",125],["kartoffeln",400],["brokkoli",200],["oel",10,"1 EL"]],
+      steps:["Ofen auf 220 °C Umluft vorheizen.","Kartoffeln vierteln, mit der Hälfte des Öls, Salz und Rosmarin mischen und 15 Minuten backen.","Lachs und Brokkoli mit dem restlichen Öl dazu aufs Blech legen.","Alles weitere 12–15 Minuten backen, bis der Lachs innen glasig bis gar ist."]},
+  D2:{n:"Seelachs mit Kartoffelpüree & Spinat", min:25, tags:["Hausmannskost"], ing:[["seelachs",125],["kartoffeln",500],["milch",100],["butter",20],["spinat",200]],
+      steps:["Kartoffeln schälen, würfeln und in Salzwasser 15 Minuten weich kochen.","Seelachs salzen und in einer beschichteten Pfanne je Seite 3–4 Minuten braten.","Spinat in einem Topf auftauen und mit Salz, Pfeffer und Muskat würzen.","Kartoffeln abgießen, mit warmer Milch und Butter zu Püree stampfen."]},
+  D3:{n:"Vollkornpasta mit Thunfisch-Tomatensoße", min:20, tags:[], ing:[["nudeln",100],["thunfisch",150],["passata",250],["zwiebel",50],["oel",10,"1 EL"],["parmesan",10]],
+      steps:["Nudeln nach Packungsangabe kochen.","Zwiebel und 1 Knoblauchzehe in Öl andünsten.","Passata dazugeben, 5 Minuten köcheln lassen, dann den abgetropften Thunfisch unterrühren.","Mit Salz, Pfeffer und Oregano abschmecken, mit den Nudeln mischen und Parmesan darüber geben."]},
+  D4:{n:"Bratkartoffeln mit Spiegelei & Gurkensalat", min:25, tags:["Hausmannskost"], ing:[["kartoffeln",400],["eier",165],["oel",10,"1 EL"],["zwiebel",50],["gurke",200]],
+      steps:["Kartoffeln in Scheiben schneiden und in 2/3 des Öls bei mittlerer Hitze 15 Minuten goldbraun braten.","Zwiebel in Streifen dazugeben und 3 Minuten mitbraten. Mit Salz, Pfeffer und Majoran würzen.","Im restlichen Öl 3 Spiegeleier braten.","Gurke hobeln und mit Essig, Salz, Pfeffer und Dill anmachen."]},
+  D5:{n:"Hähnchen-Wraps mit Paprika & Mais", min:20, tags:[], ing:[["wrap",120],["haehnchen",120],["paprika",100],["mais",70],["huette",50],["oel",5,"1 TL"]],
+      steps:["Hähnchen in Streifen schneiden, mit Paprikapulver, Salz und Pfeffer würzen.","In Öl 6–7 Minuten durchbraten, Paprikastreifen die letzten 2 Minuten mitbraten.","Wraps kurz in der trockenen Pfanne erwärmen.","Mit Frischkäse bestreichen, mit Hähnchen, Paprika und Mais füllen und einrollen."]},
+  D6:{n:"Rotes Linsen-Curry mit Spinat & Reis", min:25, tags:["Asiatisch"], ing:[["linsen",70],["kokos",150],["passata",100],["spinat",100],["zwiebel",50],["reis",70]],
+      steps:["Reis nach Packungsangabe kochen.","Zwiebel würfeln, mit 1 TL Currypulver und etwas Ingwer in einem Topf anrösten.","Linsen, Kokosmilch, Passata und 200 ml Wasser dazugeben.","12 Minuten köcheln lassen, bis die Linsen weich sind. Spinat unterrühren und abschmecken."]},
+  D7:{n:"Ofen-Hähnchen mit Kürbis, Kartoffeln & Feta", min:35, tags:["Ofen","Saison"], ing:[["haehnchen",120],["kuerbis",300],["kartoffeln",250],["feta",30],["oel",10,"1 EL"]],
+      steps:["Ofen auf 200 °C Umluft vorheizen. Hokkaido muss nicht geschält werden.","Kürbis und Kartoffeln in Spalten schneiden, mit Öl, Salz und Paprikapulver mischen und 15 Minuten backen.","Hähnchen würzen, dazulegen und weitere 18–20 Minuten backen.","Feta darüber bröseln und servieren."]},
+
+  VS3:{n:"Ei-Wrap mit Frischkäse & Paprika", min:5, tags:["Zum Mitnehmen"], ing:[["wrap",60],["eier",55],["huette",75],["paprika",75]],
+      steps:["Ei 9 Minuten hart kochen, abschrecken und in Scheiben schneiden. Geht auch am Vorabend.","Wrap mit körnigem Frischkäse bestreichen, mit Ei und Paprikastreifen belegen und fest einrollen."]},
+  VL1:{n:"Tofu-Teriyaki-Bowl", min:15, tags:["Meal Prep"], prep:"Sonntag", ing:[["tofu",200],["reis",100],["brokkoli",150],["paprika",100],["oel",5,"1 TL"],["soja",20,"1½ EL"],["honig",10,"1 TL"]],
+      steps:["Meal Prep am Sonntag: Reis für 3 Portionen nach Packungsangabe kochen.","Tofu gut ausdrücken, würfeln und in Öl rundum 8–10 Minuten knusprig braten.","Brokkoli und Paprika dazugeben und 4 Minuten mitbraten.","Sojasoße, Honig, 1 TL geriebenen Ingwer und 1 gepresste Knoblauchzehe verrühren, dazugeben und kurz einkochen.","Auf 3 Dosen verteilen, abkühlen lassen und kalt stellen. Mittags 2–3 Minuten in der Mikrowelle erhitzen."]},
+  VL2:{n:"Chili sin Carne mit Reis & Skyr", min:15, tags:["Meal Prep"], prep:"Mittwoch", ing:[["sojagranulat",50],["kidney",125],["mais",70],["passata",250],["zwiebel",50],["paprika",75],["reis",75],["oel",10,"1 EL"],["skyr",100]],
+      steps:["Meal Prep am Mittwochabend: Reis für 3 Portionen kochen.","Sojagranulat mit der doppelten Menge heißer Gemüsebrühe übergießen und 10 Minuten quellen lassen.","Zwiebel würfeln, in Öl glasig dünsten, Sojagranulat dazugeben und kräftig anbraten.","Paprika würfeln und mitbraten. Mit Kreuzkümmel, Paprikapulver, Chili, Salz und Pfeffer würzen.","Passata, Kidneybohnen und Mais dazugeben, 15 Minuten köcheln lassen und mit dem Reis auf 3 Dosen verteilen.","Vor dem Essen einen Klecks Skyr daraufgeben. Er ersetzt Schmand und bringt Protein."]},
+  VL3:{n:"Vollkornpasta mit Linsen-Bolognese", min:25, tags:["Sonntag"], ing:[["nudeln",110],["linsen",60],["passata",250],["zwiebel",50],["hartkaese",15],["oel",10,"1 EL"]],
+      steps:["Nudelwasser aufsetzen und kräftig salzen.","Zwiebel würfeln und in Öl andünsten. Linsen, Passata und 200 ml Wasser dazugeben.","Mit Oregano, Salz und Pfeffer würzen und 12–15 Minuten köcheln lassen, bis die Linsen weich sind.","Nudeln nach Packungsangabe kochen, mit der Soße mischen und Hartkäse darüber reiben."]},
+  VD1:{n:"Ofen-Halloumi mit Kartoffeln & Brokkoli", min:30, tags:["Ofen"], ing:[["halloumi",100],["kartoffeln",400],["brokkoli",200],["oel",5,"1 TL"]],
+      steps:["Ofen auf 220 °C Umluft vorheizen.","Kartoffeln vierteln, mit Öl, Salz und Rosmarin mischen und 15 Minuten backen.","Halloumi in Scheiben schneiden und mit dem Brokkoli dazu aufs Blech legen.","Weitere 12 Minuten backen, bis der Halloumi goldbraun ist."]},
+  VD2:{n:"Kartoffelpüree mit Spiegelei & Spinat", min:25, tags:["Hausmannskost"], ing:[["kartoffeln",450],["eier",165],["milch",100],["butter",10],["spinat",200]],
+      steps:["Kartoffeln schälen, würfeln und in Salzwasser 15 Minuten weich kochen.","Spinat in einem Topf auftauen und mit Salz, Pfeffer und Muskat würzen.","Kartoffeln abgießen, mit warmer Milch und Butter zu Püree stampfen.","In einer beschichteten Pfanne 3 Spiegeleier braten."]},
+  VD3:{n:"Vollkornpasta mit Kichererbsen-Tomatensoße & Feta", min:20, tags:[], ing:[["nudeln",100],["kichererbsen",120],["passata",250],["zwiebel",50],["feta",40],["oel",10,"1 EL"]],
+      steps:["Nudeln nach Packungsangabe kochen.","Zwiebel und 1 Knoblauchzehe in Öl andünsten.","Passata und abgetropfte Kichererbsen dazugeben und 8 Minuten köcheln lassen. Mit Salz, Pfeffer und Oregano abschmecken.","Mit den Nudeln mischen und Feta darüber bröseln."]},
+  VD5:{n:"Bohnen-Ei-Wraps mit Paprika & Mais", min:20, tags:[], ing:[["wrap",120],["eier",110],["kidney",100],["mais",70],["paprika",100],["huette",50],["oel",5,"1 TL"]],
+      steps:["Eier verquirlen und in Öl zu Rührei braten.","Kidneybohnen, Mais und Paprikawürfel in derselben Pfanne 3 Minuten erwärmen und mit Paprikapulver würzen.","Wraps kurz in der trockenen Pfanne erwärmen und mit Frischkäse bestreichen.","Mit Rührei und Gemüse füllen und einrollen."]},
+  VD7:{n:"Ofen-Kürbis mit Kichererbsen, Feta & Kräuter-Skyr", min:35, tags:["Ofen","Saison"], ing:[["kuerbis",300],["kartoffeln",200],["kichererbsen",120],["feta",60],["oel",10,"1 EL"],["skyr",150]],
+      steps:["Ofen auf 200 °C Umluft vorheizen. Hokkaido muss nicht geschält werden.","Kürbis und Kartoffeln in Spalten schneiden, mit Kichererbsen, Öl, Salz und Paprikapulver mischen.","30 Minuten backen, nach der Hälfte einmal wenden.","Skyr mit Kräutern, Salz und Zitrone verrühren. Feta über das Gemüse bröseln und mit dem Dip servieren."]}
+};
+
+const SLOTS = [
+  {n:"Frühstück", t:"07:00"},
+  {n:"Snack", t:"10:00"},
+  {n:"Mittagessen", t:"13:00"},
+  {n:"Nach dem Training", rest:"Nachmittags-Snack", t:"17:30", restT:"16:00"},
+  {n:"Abendessen", t:"19:30"}
+];
+
+const WEEK = [
+  {d:"Montag",     s:"Mo", train:true,  m:["B1","S1","L1","P1","D1"]},
+  {d:"Dienstag",   s:"Di", train:true,  m:["B2","S4","L1","P2","D2"]},
+  {d:"Mittwoch",   s:"Mi", train:false, m:["B3","S4","L1","P1","D3"]},
+  {d:"Donnerstag", s:"Do", train:true,  m:["B1","S2","L2","P1","D4"]},
+  {d:"Freitag",    s:"Fr", train:true,  m:["B2","S4","L2","P2","D5"]},
+  {d:"Samstag",    s:"Sa", train:false, m:["B4","S3","L2","P2","D6"]},
+  {d:"Sonntag",    s:"So", train:false, m:["B4","S1","L3","P1","D7"]}
+];
+const WEEK_V = [
+  {d:"Montag",     s:"Mo", m:["B1","S1","VL1","P1","VD1"]},
+  {d:"Dienstag",   s:"Di", m:["B3","S4","VL1","P2","VD2"]},
+  {d:"Mittwoch",   s:"Mi", m:["B2","VS3","VL1","P1","VD3"]},
+  {d:"Donnerstag", s:"Do", m:["B1","S2","VL2","P1","D4"]},
+  {d:"Freitag",    s:"Fr", m:["B2","S4","VL2","P2","VD5"]},
+  {d:"Samstag",    s:"Sa", m:["B4","VS3","VL2","P2","D6"]},
+  {d:"Sonntag",    s:"So", m:["B4","S1","VL3","P1","VD7"]}
+];
+
+const SEED_PROFILE = null;
+
+/* ================= constants ================= */
+const MONTHS = ["Januar","Februar","März","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"];
+const DAYS_S = ["Mo","Di","Mi","Do","Fr","Sa","So"];
+const TITLES = {heute:"Heute", woche:"Woche", einkauf:"Einkaufsliste", ziele:"Ziele"};
+const CATS = [["obst","Obst & Gemüse"],["kuehl","Kühlregal"],["fleisch","Fleisch"],["tk","Tiefkühl"],["brot","Brot"],["vorrat","Vorrat & Konserven"]];
+const TRAIN_PATTERNS = {0:[],1:[2],2:[1,4],3:[0,2,4],4:[0,1,3,4],5:[0,1,2,3,4],6:[0,1,2,3,4,5],7:[0,1,2,3,4,5,6]};
+const GOALS = {
+  abnehmen:{n:"Abnehmen", adj:-400, pk:2.0},
+  halten:{n:"Gewicht halten", adj:0, pk:1.8},
+  aufbau:{n:"Muskelaufbau", adj:250, pk:2.2}
+};
+const DIETS = {misch:{n:"Mischkost", week:WEEK}, veggie:{n:"Vegetarisch", week:WEEK_V}};
+const COLORS = ["--i-green","--i-blue","--i-orange","--i-pink","--i-indigo","--i-teal","--i-purple"];
+const DEFAULT_PROFILE = {name:"Ich", sex:"m", age:25, height:175, weight:70, train:3, goal:"halten", diet:"misch"};
+
+const $ = (s, el = document) => el.querySelector(s);
+const nf0 = new Intl.NumberFormat("de-DE", {maximumFractionDigits:0});
+const nfq = new Intl.NumberFormat("de-DE", {maximumFractionDigits:1});
+const nfl = new Intl.NumberFormat("de-DE", {maximumFractionDigits:2});
+const nf2 = new Intl.NumberFormat("de-DE", {minimumFractionDigits:2, maximumFractionDigits:2});
+const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const L3 = `<span class="lg-refract"></span><span class="lg-tint"></span><span class="lg-spec"></span>`;
+
+const I = {
+  chev:'<svg class="chev" viewBox="0 0 8 14" aria-hidden="true"><path d="M1.5 1.5 6.5 7l-5 5.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  check:'<svg viewBox="0 0 14 14" aria-hidden="true"><path d="M2.8 7.4 5.7 10.2 11.2 3.8" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  clock:'<svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></g></svg>',
+  checkBig:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5 9.8 17 19 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  tick:'<svg class="pcheck" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5 9.8 17 19 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  info:'<svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/></g><circle cx="12" cy="7.8" r="1.25" fill="currentColor"/><path d="M12 11v6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>',
+  plus:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5.5v13M5.5 12h13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>',
+  back:'<svg class="lg-content" viewBox="0 0 16 16" aria-hidden="true"><path d="M10.5 2.5 5 8l5.5 5.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+};
+const IC = {
+  flame:'<path fill="currentColor" d="M12 2.8c.5 2.9 4.6 4.9 4.6 9.6a4.6 4.6 0 0 1-9.2 0c0-2.2 1.1-3.6 2.3-4.6.1 1.6.9 2.7 2 3.1-.4-3.2-.4-5.5.3-8.1z"/>',
+  bolt:'<path fill="currentColor" d="M13.5 2 5 13.5h6l-1 8.5 8.5-11.5h-6z"/>',
+  bars:'<path fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" d="M6 19v-7M12 19V5M18 19v-4"/>',
+  plus:'<path fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" d="M12 5.5v13M5.5 12h13"/>',
+  minus:'<path fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" d="M5.5 12h13"/>',
+  equal:'<path fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" d="M6 9.5h12M6 14.5h12"/>',
+  target:'<g fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4.3"/></g><circle cx="12" cy="12" r="1.6" fill="currentColor"/>',
+  dumbbell:'<path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" d="M3.5 10v4M6.5 7.5v9M17.5 7.5v9M20.5 10v4M6.5 12h11"/>',
+  clock:'<g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="8.3"/><path d="M12 7.5V12l3 2"/></g>',
+  cup:'<path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" d="M7.5 8h9l-1.3 12h-6.4zM8.5 4h7v4h-7z"/>',
+  moon:'<path fill="currentColor" d="M19.5 14.6A8 8 0 0 1 9.4 4.5a8 8 0 1 0 10.1 10.1z"/>',
+  drop:'<path fill="currentColor" d="M12 2.8c3.4 4.3 6.2 7.6 6.2 11.2a6.2 6.2 0 0 1-12.4 0C5.8 10.4 8.6 7.1 12 2.8z"/>',
+  box:'<path fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" d="M5 10h14v8a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2zM3.5 6.5h17V10h-17zM10 14h4"/>',
+  fridge:'<path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M8 3h8a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zM6 10h12M9.5 6v1.5M9.5 13v3"/>',
+  pill:'<g fill="none" stroke="currentColor" stroke-width="2" transform="rotate(-45 12 12)"><rect x="3" y="8.5" width="18" height="7" rx="3.5"/><path d="M12 8.5v7"/></g>',
+  sun:'<g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></g>',
+  scale:'<g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3.5" y="4" width="17" height="16" rx="3"/><path d="M8.5 10a3.5 3.5 0 0 1 7 0zM12 10l1.4-1.8"/></g>',
+  up:'<path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="M12 19V5M6 11l6-6 6 6"/>',
+  down:'<path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="M12 5v14M6 13l6 6 6-6"/>',
+  leaf:'<path fill="currentColor" d="M20 4C11 4 5 8.4 5 14.6c0 1.4.4 2.7 1 3.7L4 20.3l1.4 1.4 2-2c1.1.7 2.4 1 3.8 1C17.6 20.7 20 13 20 4zM9.6 17.2c1.4-3.1 3.7-5.6 6.7-7.4-2.6 2.3-4.4 5-5.4 8z"/>'
+};
+const sq = (c, ic) => `<span class="sq" style="--c:var(${c})"><svg viewBox="0 0 24 24" aria-hidden="true">${IC[ic]}</svg></span>`;
+const zrow = (c, ic, title, sub, val, strong) =>
+  `<div class="row ziele-row" style="--inset:58px">${sq(c, ic)}<span class="mtext"><span class="mtitle">${title}</span>${sub ? `<span class="msub">${sub}</span>` : ""}</span>${val ? `<span class="rval${strong ? " strong" : ""}">${val}</span>` : ""}</div>`;
+
+/* ================= storage (this device only) ================= */
+const store = {
+  get(k, d){ try { const v = localStorage.getItem("mkp." + k); return v === null ? d : JSON.parse(v); } catch(e){ return d; } },
+  set(k, v){ try { localStorage.setItem("mkp." + k, JSON.stringify(v)); } catch(e){} },
+  dropPrefix(p){ try { Object.keys(localStorage).filter(k => k.startsWith("mkp." + p)).forEach(k => localStorage.removeItem(k)); } catch(e){} }
+};
+
+/* ================= dates ================= */
+const now = new Date();
+const TODAY = (now.getDay() + 6) % 7;
+const pad = n => String(n).padStart(2, "0");
+const DKEY = `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}`;
+const MONDAY = new Date(now.getFullYear(), now.getMonth(), now.getDate() - TODAY);
+const dateOf = i => new Date(MONDAY.getFullYear(), MONDAY.getMonth(), MONDAY.getDate() + i);
+
+/* ================= profiles ================= */
+const newId = () => "p" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+let P = store.get("profiles", null);
+let FIRST_RUN = false;
+if (!P || !Array.isArray(P.list) || !P.list.length){
+  const base = (typeof SEED_PROFILE !== "undefined" && SEED_PROFILE) ? SEED_PROFILE : DEFAULT_PROFILE;
+  FIRST_RUN = !(typeof SEED_PROFILE !== "undefined" && SEED_PROFILE);
+  const p = {...base, id:newId(), color:0};
+  P = {list:[p], active:p.id};
+  store.set("profiles", P);
+  // carry over today's checks and the shopping list from the single-profile version
+  const os = store.get("shop", null), oe = store.get("eaten." + DKEY, null), ow = store.get("water." + DKEY, null);
+  if (os) store.set(`shop.${p.id}`, os);
+  if (oe) store.set(`eaten.${p.id}.${DKEY}`, oe);
+  if (ow != null) store.set(`water.${p.id}.${DKEY}`, ow);
+}
+const saveProfiles = () => store.set("profiles", P);
+const prof = () => P.list.find(p => p.id === P.active) || P.list[0];
+const initial = p => (String(p.name || "").trim()[0] || "?").toUpperCase();
+const colorOf = p => COLORS[(p.color || 0) % COLORS.length];
+
+/* Energy and macro targets (Mifflin-St Jeor; PAL 1.35 + 0.05 per training day) */
+function calc(p){
+  const bmr = 10 * p.weight + 6.25 * p.height - 5 * p.age + (p.sex === "w" ? -161 : 5);
+  const pal = 1.35 + 0.05 * p.train;
+  const tdee = bmr * pal;
+  const g = GOALS[p.goal] || GOALS.aufbau;
+  let raw = tdee + g.adj, floored = false;
+  if (raw < bmr * 1.1){ raw = bmr * 1.1; floored = true; }
+  const k = Math.round(raw / 50) * 50;
+  const refW = Math.min(p.weight, 27 * Math.pow(p.height / 100, 2));
+  const r5 = x => Math.round(x / 5) * 5;
+  const pr = Math.min(r5(refW * g.pk), r5(k * 0.35 / 4));
+  const f = Math.min(Math.max(r5(refW * 1.0), r5(k * 0.22 / 9)), r5(k * 0.35 / 9));
+  const c = Math.max(0, r5((k - 60 - pr * 4 - f * 9) / 4));
+  const waterL = Math.max(1.5, Math.round((p.weight * 0.035 + 0.5) * 4) / 4);
+  return {bmr, pal, tdee, raw, k, p:pr, f, c, adj: raw - tdee, floored, capped: refW < p.weight, refW,
+          waterL, glasses: Math.min(16, Math.round(waterL / 0.25))};
+}
+
+/* ================= plan (scaled to the profile's target) ================= */
+function macOf(ing){
+  const t = {k:0,p:0,c:0,f:0};
+  for (const [k, g] of ing){ const i = ING[k]; t.k += i.k*g/100; t.p += i.p*g/100; t.c += i.c*g/100; t.f += i.f*g/100; }
+  return t;
+}
+function roundG(k, g){
+  const i = ING[k];
+  if (i.pc && i.pc[0] <= 60){ const h = i.pc[0] / 2; return Math.max(h, Math.round(g / h) * h); }
+  if (g < 20) return Math.max(1, Math.round(g));
+  if (g < 250) return Math.round(g / 5) * 5;
+  return Math.round(g / 10) * 10;
+}
+/* Each ingredient belongs to the macro that supplies most of its energy (0 protein, 1 fat, 2 carbs).
+   Per day, the three groups get their own factor so kcal, protein and fat all hit the target
+   (3×3 linear system). If plain scaling is already within 10 %, recipes are only scaled evenly. */
+const grpOf = k => { const i = ING[k], e = [i.p * 4, i.f * 9, i.c * 4]; return e.indexOf(Math.max(...e)); };
+const det3 = m => m[0][0]*(m[1][1]*m[2][2]-m[1][2]*m[2][1]) - m[0][1]*(m[1][0]*m[2][2]-m[1][2]*m[2][0]) + m[0][2]*(m[1][0]*m[2][1]-m[1][1]*m[2][0]);
+function dayFactors(ids, t){
+  const G = [0, 1, 2].map(() => ({k:0, p:0, f:0}));
+  for (const id of ids) for (const [k, g] of MEALS[id].ing){ const i = ING[k], x = G[grpOf(k)]; x.k += i.k*g/100; x.p += i.p*g/100; x.f += i.f*g/100; }
+  const sk = G[0].k + G[1].k + G[2].k, sp = G[0].p + G[1].p + G[2].p, sf = G[0].f + G[1].f + G[2].f, u = t.k / sk;
+  if (Math.abs(sp * u / t.p - 1) <= .1 && Math.abs(sf * u / t.f - 1) <= .1) return [u, u, u];
+  const A = [[G[0].k, G[1].k, G[2].k], [G[0].p, G[1].p, G[2].p], [G[0].f, G[1].f, G[2].f]], b = [t.k, t.p, t.f], D = det3(A);
+  let fs = Math.abs(D) > 1e-6 ? [0, 1, 2].map(j => det3(A.map((r, i) => r.map((v, jj) => jj === j ? b[i] : v))) / D) : [u, u, u];
+  fs = fs.map(v => Math.min(2.5, Math.max(.4, v)));
+  const w = t.k / fs.reduce((a, v, j) => a + v * G[j].k, 0);
+  return fs.map(v => v * w);
+}
+let PLAN = null;
+function buildPlan(){
+  const p = prof(), t = calc(p), week = (DIETS[p.diet] || DIETS.misch).week, train = TRAIN_PATTERNS[p.train] || [];
+  const days = week.map((w, di) => {
+    const fs = dayFactors(w.m, t);
+    const meals = w.m.map(id => {
+      const M = MEALS[id];
+      const ing = M.ing.map(([k, g, h]) => { const f = fs[grpOf(k)]; return Math.abs(f - 1) < 0.03 ? [k, g, h] : [k, roundG(k, g * f)]; });
+      return {id, M, ing, m: macOf(ing)};
+    });
+    const tot = meals.reduce((a, x) => { for (const q in a) a[q] += x.m[q]; return a; }, {k:0,p:0,c:0,f:0});
+    return {d:w.d, s:w.s, train: train.includes(di), meals, tot, scaled: fs.some(f => Math.abs(f - 1) >= 0.03)};
+  });
+  return PLAN = {p, t, days};
+}
+function slot(di, si){
+  const S = SLOTS[si], tr = PLAN.days[di].train;
+  return {n: (!tr && S.rest) ? S.rest : S.n, t: (!tr && S.restT) ? S.restT : S.t};
+}
+
+/* ================= amounts ================= */
+const FR = [[0,""],[.25,"¼"],[1/3,"⅓"],[.5,"½"],[2/3,"⅔"],[.75,"¾"],[1,""]];
+function frac(n){
+  let w = Math.floor(n); const r = n - w; let best = FR[0], d = 9;
+  for (const f of FR){ const dd = Math.abs(r - f[0]); if (dd < d){ d = dd; best = f; } }
+  if (best[0] === 1) w += 1;
+  const s = (w ? String(w) : "") + best[1];
+  return {s: s || "0", exact: d < 0.04};
+}
+function fmtQ(g, ml){
+  if (g >= 1000) return `${nfq.format(g/1000)} ${ml ? "l" : "kg"}`;
+  return `${nf0.format(g)} ${ml ? "ml" : "g"}`;
+}
+function recAmt(k, g, hint){
+  const i = ING[k];
+  if (hint) return {main:hint, sub:fmtQ(g, i.ml)};
+  if (i.pc){
+    const n = g / i.pc[0], fr = frac(n), lbl = n > 1.01 ? i.pc[2] : i.pc[1];
+    return fr.exact ? {main:`${fr.s} ${lbl}`, sub:fmtQ(g, i.ml)} : {main:fmtQ(g, i.ml), sub:`≈ ${fr.s} ${lbl}`};
+  }
+  return {main:fmtQ(g, i.ml), sub:""};
+}
+function shopAmt(k, g){
+  const i = ING[k]; let main, sub = "";
+  if (i.pc){
+    const n = Math.max(1, Math.ceil(g / i.pc[0] - 0.15));
+    main = `${n} ${n > 1 ? i.pc[2] : i.pc[1]}`; sub = fmtQ(g, i.ml);
+  } else {
+    main = fmtQ(g, i.ml);
+    if (i.pack){ const n = Math.max(1, Math.ceil(g / i.pack[0] - 0.08)); sub = `${n} × ${i.pack[1]}`; }
+  }
+  if (i.note) sub = sub ? `${sub} · ${i.note}` : i.note;
+  return {main, sub};
+}
+
+/* ================= per-profile day state ================= */
+const state = {tab:"heute", day:TODAY, shop:"all"};
+let eaten, water, shopDone;
+function loadState(){
+  const id = prof().id;
+  eaten = new Set(store.get(`eaten.${id}.${DKEY}`, []));
+  water = store.get(`water.${id}.${DKEY}`, 0);
+  shopDone = store.get(`shop.${id}`, {});
+}
+const scrollMem = {};
+
+/* ================= HEUTE ================= */
+function ringSet(el, pct){
+  const L = 2 * Math.PI * +el.getAttribute("r"), p = Math.min(pct, 1);
+  el.style.strokeDasharray = L;
+  el.style.strokeDashoffset = L * (1 - p);
+  el.style.opacity = p > 0.003 ? 1 : 0;
+}
+function mealRow(di, si){
+  const x = PLAN.days[di].meals[si], sl = slot(di, si), done = eaten.has(si);
+  return `<div class="row mrow${done ? " done" : ""}" style="--inset:56px">
+    <button class="check" data-eat="${si}" aria-pressed="${done}" aria-label="${sl.n}: ${x.M.n} als gegessen markieren"><span class="ring">${I.check}</span></button>
+    <button class="mbtn" data-open="${di}-${si}">
+      <span class="mtext"><span class="mtitle">${x.M.n}</span><span class="msub">${sl.t} · ${sl.n}</span></span>
+      <span class="mkcal">${nf0.format(x.m.k)} kcal</span>${I.chev}
+    </button></div>`;
+}
+function renderHeute(){
+  const d = PLAN.days[TODAY], t = PLAN.t;
+  $("#hEyebrow").textContent = `${d.d}, ${now.getDate()}. ${MONTHS[now.getMonth()]} · ${d.train ? "Trainingstag" : "Ruhetag"}`;
+  const got = d.meals.filter((_, i) => eaten.has(i)).reduce((a, x) => { for (const q in a) a[q] += x.m[q]; return a; }, {k:0,p:0,c:0,f:0});
+  ringSet($("#rP"), got.p / t.p);
+  ringSet($("#rC"), got.c / t.c);
+  ringSet($("#rF"), got.f / t.f);
+  $("#rings").setAttribute("aria-label", `Protein ${nf0.format(got.p)} von ${t.p} g, Kohlenhydrate ${nf0.format(got.c)} von ${t.c} g, Fett ${nf0.format(got.f)} von ${t.f} g`);
+  $("#kNum").textContent = nf0.format(got.k);
+  $("#kOf").textContent = `von ${nf0.format(t.k)} kcal`;
+  $("#kBar").style.width = Math.min(100, got.k / t.k * 100) + "%";
+  const left = t.k - got.k, open = d.meals.length - eaten.size;
+  $("#kLeft").textContent = left > 0
+    ? `Noch ${nf0.format(left)} kcal · ${open} ${open === 1 ? "Mahlzeit" : "Mahlzeiten"} offen`
+    : "Tagesziel erreicht";
+  $("#vP").innerHTML = `${nf0.format(got.p)} <small>/ ${t.p} g</small>`;
+  $("#vC").innerHTML = `${nf0.format(got.c)} <small>/ ${t.c} g</small>`;
+  $("#vF").innerHTML = `${nf0.format(got.f)} <small>/ ${t.f} g</small>`;
+  $("#hPlan").textContent = `${nf0.format(d.tot.k)} kcal geplant`;
+  $("#hMeals").innerHTML = d.meals.map((_, i) => mealRow(TODAY, i)).join("");
+  $("#hFoot").textContent = d.train
+    ? "Trainingstag: Den Snack um 17:30 isst du nach dem Training. Trainierst du zu einer anderen Zeit, verschieb ihn einfach mit."
+    : "Ruhetag: Du isst genauso viel wie an Trainingstagen. Die Muskeln wachsen in der Erholung.";
+  renderWater();
+}
+function renderWater(){
+  const t = PLAN.t, n = t.glasses;
+  water = Math.min(water, n);
+  $("#wVal").innerHTML = `${nfl.format(water * 0.25)} l <span>von ${nfl.format(t.waterL)} l</span>`;
+  $("#wSub").textContent = `${water} von ${n} Gläsern à 250 ml`;
+  $("#wMinus").disabled = water <= 0;
+  $("#wPlus").disabled = water >= n;
+  const g = $("#glasses");
+  if (g.children.length !== n){
+    g.style.gridTemplateColumns = `repeat(${n},1fr)`;
+    g.innerHTML = Array.from({length:n}, (_, i) =>
+      `<button class="cup" data-glass="${i}" aria-label="${i+1} ${i ? "Gläser" : "Glas"}"></button>`).join("");
+  }
+  [...g.children].forEach((b, i) => b.setAttribute("aria-pressed", i < water));
+}
+function setWater(v){ water = Math.max(0, Math.min(PLAN.t.glasses, v)); store.set(`water.${prof().id}.${DKEY}`, water); renderWater(); }
+function toggleEaten(si){
+  eaten.has(si) ? eaten.delete(si) : eaten.add(si);
+  store.set(`eaten.${prof().id}.${DKEY}`, [...eaten]);
+  renderHeute();
+}
+
+/* ================= WOCHE ================= */
+function stat(label, c, v, u){
+  return `<div class="stat"><span class="stat-l"><span class="dot" style="--c:${c}"></span>${label}</span><span class="stat-v">${nf0.format(v)}</span><span class="stat-u">${u}</span></div>`;
+}
+function renderWoche(){
+  $("#week").innerHTML = PLAN.days.map((w, i) => {
+    const dt = dateOf(i);
+    return `<button class="day${w.train ? " train" : ""}${i === TODAY ? " today" : ""}" role="tab" data-day="${i}" aria-selected="${i === state.day}" aria-label="${w.d}, ${dt.getDate()}. ${MONTHS[dt.getMonth()]}${w.train ? ", Trainingstag" : ""}">
+      <span class="dl">${w.s[0]}</span><span class="dn">${dt.getDate()}</span><span class="tdot"></span></button>`;
+  }).join("");
+  const w = PLAN.days[state.day], t = w.tot, dt = dateOf(state.day);
+  const a0 = dateOf(0), a6 = dateOf(6);
+  $("#wkEyebrow").textContent = a0.getMonth() === a6.getMonth()
+    ? `${a0.getDate()}. – ${a6.getDate()}. ${MONTHS[a6.getMonth()]} · ${DIETS[PLAN.p.diet].n}`
+    : `${a0.getDate()}. ${MONTHS[a0.getMonth()]} – ${a6.getDate()}. ${MONTHS[a6.getMonth()]} · ${DIETS[PLAN.p.diet].n}`;
+  $("#dTitle").textContent = state.day === TODAY ? `Heute, ${w.d}` : w.d;
+  $("#dSub").textContent = `${dt.getDate()}. ${MONTHS[dt.getMonth()]} · ${w.train ? "Trainingstag" : "Ruhetag"}`;
+  $("#dStats").innerHTML = stat("kcal", "var(--ring-kcal)", t.k, "Kalorien") + stat("Protein", "var(--protein)", t.p, "Gramm")
+    + stat("KH", "var(--carbs)", t.c, "Gramm") + stat("Fett", "var(--fat)", t.f, "Gramm");
+  $("#dMeals").innerHTML = w.meals.map((x, si) => {
+    const sl = slot(state.day, si);
+    return `<button class="row wrow" data-open="${state.day}-${si}" style="--inset:76px">
+      <span class="wtime">${sl.t}</span>
+      <span class="mtext"><span class="mtitle">${x.M.n}</span><span class="msub">${sl.n} · ${x.M.min} Min.</span></span>
+      <span class="mkcal">${nf0.format(x.m.k)}</span>${I.chev}</button>`;
+  }).join("");
+  $("#wFoot").textContent = `Die Mittagessen von Montag bis Samstag kochst du vor: ${PLAN.days[0].meals[2].M.n} am Sonntag, ${PLAN.days[3].meals[2].M.n} am Mittwochabend.`;
+  renderNav();
+}
+
+/* ================= EINKAUF ================= */
+const SCOPE_DAYS = {all:[0,1,2,3,4,5,6], a:[0,1,2], b:[3,4,5,6]};
+function scopeNote(sc){
+  if (sc === "a") return "Einkauf am Samstag für Montag bis Mittwoch. Sonntags haben die meisten Läden zu, gekocht wird trotzdem am Sonntag.";
+  if (sc === "b") return `Einkauf am Mittwoch für Donnerstag bis Sonntag. Abends gleich ${PLAN.days[3].meals[2].M.n} für drei Tage vorkochen.`;
+  return PLAN.p.diet === "veggie"
+    ? "Alles für sieben Tage auf einmal. Tofu, Halloumi und Skyr halten im Kühlschrank meist bis zum Wochenende, schau aufs Datum."
+    : "Alles für sieben Tage auf einmal. Frisches Fleisch für die zweite Wochenhälfte dann einfrieren und am Vortag im Kühlschrank auftauen.";
+}
+function shopItems(sc){
+  const agg = {};
+  for (const di of SCOPE_DAYS[sc]) for (const x of PLAN.days[di].meals) for (const [k, g] of x.ing) agg[k] = (agg[k] || 0) + g;
+  return agg;
+}
+function renderShop(){
+  const sc = state.shop, agg = shopItems(sc), done = new Set(shopDone[sc] || []);
+  document.querySelectorAll("#shopSeg button").forEach(b => b.setAttribute("aria-selected", b.dataset.scope === sc));
+  $("#segThumb").style.setProperty("--i", ["all","a","b"].indexOf(sc));
+  $("#shopNote").textContent = scopeNote(sc);
+  $("#shopEyebrow").textContent = `Mengen für ${PLAN.p.name} · ${DIETS[PLAN.p.diet].n}`;
+  let total = 0, cnt = 0, html = "";
+  for (const [cat, label] of CATS){
+    const keys = Object.keys(agg).filter(k => ING[k].cat === cat).sort((a, b) => ING[a].n.localeCompare(ING[b].n, "de"));
+    if (!keys.length) continue;
+    html += `<div class="grp"><div class="grp-h"><h3>${label}</h3></div><div class="card list">` + keys.map(k => {
+      total++; const on = done.has(k); if (on) cnt++;
+      const a = shopAmt(k, agg[k]);
+      return `<button class="row srow" role="checkbox" aria-checked="${on}" data-shop="${k}" style="--inset:54px">
+        <span class="ring">${I.check}</span>
+        <span class="mtext"><span class="mtitle">${ING[k].n}</span>${a.sub ? `<span class="msub">${a.sub}</span>` : ""}</span>
+        <span class="samt">${a.main}</span></button>`;
+    }).join("") + `</div></div>`;
+  }
+  $("#shopLists").innerHTML = html;
+  $("#shopCount").textContent = `${cnt} von ${total}`;
+  $("#shopBar").style.width = (total ? cnt / total * 100 : 0) + "%";
+  renderNav();
+}
+function toggleShop(k){
+  const set = new Set(shopDone[state.shop] || []);
+  set.has(k) ? set.delete(k) : set.add(k);
+  shopDone[state.shop] = [...set]; store.set(`shop.${prof().id}`, shopDone);
+  const sy = scrollY; renderShop(); window.scrollTo(0, sy);
+  document.querySelector(`[data-shop="${k}"]`)?.focus({preventScroll:true});
+}
+
+/* ================= ZIELE ================= */
+const RATES = {
+  aufbau:{rate:"+0,2–0,3 kg/Woche", rateSub:"Etwa 1 kg pro Monat", rows:[["Zu langsam","2 Wochen ohne Zunahme: 150 kcal mehr, zum Beispiel 40 g Haferflocken","up","--i-blue"],["Zu schnell","Mehr als 0,5 kg pro Woche: 150 kcal weniger","down","--i-orange"]]},
+  abnehmen:{rate:"−0,3–0,6 kg/Woche", rateSub:"Langsam genug, um Muskeln zu halten", rows:[["Zu langsam","2 Wochen ohne Abnahme: 150 kcal weniger","down","--i-blue"],["Zu schnell","Mehr als 1 kg pro Woche: 150 kcal mehr","up","--i-orange"]]},
+  halten:{rate:"± 0,5 kg", rateSub:"Normale Schwankung durch Wasser und Essen", rows:[["Gewicht sinkt","Über 2 Wochen weniger: 150 kcal mehr","up","--i-blue"],["Gewicht steigt","Über 2 Wochen mehr: 150 kcal weniger","down","--i-orange"]]}
+};
+function renderZiele(){
+  const {p, t} = PLAN, g = GOALS[p.goal];
+  const ks = PLAN.days.map(d => Math.round(d.tot.k)), kmin = Math.min(...ks), kmax = Math.max(...ks);
+  const eP = t.p * 4, eC = t.c * 4, eF = t.f * 9, eS = eP + eC + eF || 1;
+  const pP = Math.round(eP / eS * 100), pF = Math.round(eF / eS * 100), pC = 100 - pP - pF;
+  const perKg = x => nfq.format(Math.round(x / p.weight * 10) / 10);
+  const trainNames = (TRAIN_PATTERNS[p.train] || []).map(i => DAYS_S[i]).join(" ") || "Keine";
+  const adjRow = t.adj > 0.5 ? zrow("--i-pink", "plus", "Überschuss", "Für Muskelaufbau mit wenig Fettzuwachs", `+ ${nf0.format(t.adj)} kcal`)
+    : t.adj < -0.5 ? zrow("--i-pink", "minus", "Defizit", t.floored ? "Begrenzt, damit du nicht unter den Grundumsatz fällst" : "Für Fettabbau bei möglichst viel Muskelerhalt", `− ${nf0.format(-t.adj)} kcal`)
+    : zrow("--i-pink", "equal", "Kein Zuschlag", "Kalorien auf Erhaltungsniveau", "± 0 kcal");
+  const R = RATES[p.goal] || RATES.aufbau;
+  const veg = p.diet === "veggie";
+  const L1 = PLAN.days[0].meals[2].M.n, L2 = PLAN.days[3].meals[2].M.n;
+  $("#zEyebrow").textContent = `${g.n} · ${DIETS[p.diet].n}`;
+  $("#zBody").innerHTML = `
+    <button class="card profile" data-pedit="${p.id}" aria-label="Profil ${esc(p.name)} bearbeiten">
+      <span class="avatar-lg" style="--c:var(${colorOf(p)})" aria-hidden="true">${esc(initial(p))}</span>
+      <span class="mtext">
+        <span class="mtitle">${esc(p.name)}</span>
+        <span class="msub">${p.sex === "w" ? "Weiblich" : "Männlich"} · ${p.age} Jahre · ${p.height} cm · ${nfq.format(p.weight)} kg</span>
+        <span class="msub">Ziel: ${g.n} · ${p.train}× Training pro Woche</span>
+      </span>${I.chev}
+    </button>
+
+    <div class="grp">
+      <div class="grp-h"><h2>Kalorienbedarf</h2></div>
+      <div class="card list">
+        ${zrow("--i-orange", "flame", "Grundumsatz", "Mifflin-St-Jeor-Formel", `${nf0.format(t.bmr)} kcal`)}
+        ${zrow("--i-green", "bolt", "Aktivitätsfaktor", `${p.train}× Training pro Woche`, `× ${nf2.format(t.pal)}`)}
+        ${zrow("--i-blue", "bars", "Gesamtumsatz", "Damit hältst du dein Gewicht", `${nf0.format(t.tdee)} kcal`)}
+        ${adjRow}
+        ${zrow("--i-green", "target", "Tagesziel", `Gerundet von ${nf0.format(t.raw)} kcal`, `${nf0.format(t.k)} kcal`, true)}
+      </div>
+      ${p.age < 18 ? `<p class="foot">Die Formel gilt für Erwachsene. Unter 18 Jahren besprich Kalorien und Ziele bitte mit Ärztin, Arzt oder Ernährungsberatung.</p>` : ""}
+    </div>
+
+    <div class="grp">
+      <div class="grp-h"><h2>Makronährstoffe</h2></div>
+      <div class="card">
+        <div class="dist-wrap">
+          <div class="dist" role="img" aria-label="Energieverteilung: Protein ${pP} Prozent, Kohlenhydrate ${pC} Prozent, Fett ${pF} Prozent">
+            <i style="--c:var(--protein);flex:${pP}"></i><i style="--c:var(--carbs);flex:${pC}"></i><i style="--c:var(--fat);flex:${pF}"></i>
+          </div>
+          <div class="dist-cap"><span>Anteil an der Energie</span><span>${pP} · ${pC} · ${pF} %</span></div>
+        </div>
+        <div class="list">
+          <div class="row" style="--inset:38px"><span class="dot" style="--c:var(--protein)"></span><span class="mtext"><span class="mtitle">Protein</span><span class="msub">${perKg(t.p)} g pro kg Körpergewicht · ${pP} %</span></span><span class="rval strong">${t.p} g</span></div>
+          <div class="row" style="--inset:38px"><span class="dot" style="--c:var(--carbs)"></span><span class="mtext"><span class="mtitle">Kohlenhydrate</span><span class="msub">${perKg(t.c)} g pro kg · Energie fürs Training · ${pC} %</span></span><span class="rval strong">${t.c} g</span></div>
+          <div class="row" style="--inset:38px"><span class="dot" style="--c:var(--fat)"></span><span class="mtext"><span class="mtitle">Fett</span><span class="msub">${perKg(t.f)} g pro kg · wichtig für Hormone · ${pF} %</span></span><span class="rval strong">${t.f} g</span></div>
+        </div>
+      </div>
+      <p class="foot">Die App passt Eiweiß-, Fett- und Kohlenhydratquellen im Plan getrennt an, damit Kalorien und Makros zu deinem Ziel passen. Die Tage liegen zwischen ${nf0.format(kmin)} und ${nf0.format(kmax)} kcal.${t.capped ? ` Protein und Fett sind mit einem Referenzgewicht von ${nf0.format(t.refW)} kg berechnet, weil das bei höherem Körperfett genauer ist.` : ""}</p>
+    </div>
+
+    <div class="grp">
+      <div class="grp-h"><h2>Training &amp; Timing</h2></div>
+      <div class="card list">
+        ${zrow("--i-red", "dumbbell", "Trainingstage", "Beispiel. Tausch die Tage, wie es in deine Woche passt.", trainNames)}
+        ${zrow("--i-orange", "clock", "Vor dem Training", "Letzte Hauptmahlzeit 2–3 Stunden vorher. Bei Hunger eine Banane 30 Minuten vorher.")}
+        ${zrow("--i-pink", "cup", "Nach dem Training", "Snack mit 25–30 g Protein innerhalb von 2 Stunden. Im Plan ist das der Snack um 17:30.")}
+        ${zrow("--i-indigo", "moon", "Schlaf", "7–9 Stunden. Muskeln wachsen in der Erholung, nicht im Gym.")}
+        ${zrow("--i-blue", "drop", "Wasser", `Etwa ${nfl.format(t.waterL)} Liter am Tag, an Trainingstagen gern mehr.`)}
+      </div>
+    </div>
+
+    <div class="grp">
+      <div class="grp-h"><h2>Meal Prep</h2></div>
+      <div class="card list">
+        ${zrow("--i-teal", "box", "Sonntag · ca. 40 Min.", `${L1}, 3 Portionen für Montag bis Mittwoch`)}
+        ${zrow("--i-teal", "box", "Mittwochabend · ca. 40 Min.", `${L2}, 3 Portionen für Donnerstag bis Samstag`)}
+        ${zrow("--i-gray", "fridge", "Aufbewahrung", "Luftdicht und höchstens 4 Tage im Kühlschrank. Gekochten Reis zügig abkühlen lassen und kalt stellen.")}
+      </div>
+    </div>
+
+    <div class="grp">
+      <div class="grp-h"><h2>Supplements</h2><span class="aside">optional</span></div>
+      <div class="card list">
+        ${p.goal !== "halten" ? zrow("--i-purple", "pill", "Kreatin-Monohydrat", "3–5 g täglich, Uhrzeit egal. Das am besten untersuchte Supplement für Kraft.") : ""}
+        ${zrow("--i-orange", "sun", "Vitamin D", "Von Oktober bis März bildet die Haut in Deutschland kaum Vitamin D. Lass deinen Wert im Zweifel beim Hausarzt prüfen.")}
+        ${veg ? zrow("--i-green", "leaf", "Eisen & Vitamin B12", "Hülsenfrüchte mit Vitamin C kombinieren, etwa mit Paprika oder einer Orange. B12 liefern Milchprodukte und Eier.") : ""}
+        ${zrow("--i-gray", "cup", "Whey-Protein", "Nur Bequemlichkeit. Dein Plan erreicht das Protein ohne Pulver.")}
+      </div>
+      ${veg ? `<p class="foot">Viele Hartkäse wie Parmesan werden mit tierischem Lab hergestellt. Achte auf „mikrobielles Lab“ oder den Hinweis „vegetarisch“.</p>` : ""}
+    </div>
+
+    <div class="grp">
+      <div class="grp-h"><h2>Fortschritt</h2></div>
+      <div class="card list">
+        ${zrow("--i-indigo", "scale", "Wiegen", "Einmal pro Woche, morgens nach dem Aufstehen, immer auf derselben Waage")}
+        ${zrow("--i-green", "target", "Zielrate", R.rateSub, R.rate)}
+        ${R.rows.map(r => zrow(r[3], r[2], r[0], r[1])).join("")}
+      </div>
+      <p class="foot">Richtwerte für gesunde Erwachsene, keine medizinische Beratung. Die Nährwerte sind Durchschnittswerte für rohe Zutaten und weichen je nach Produkt etwas ab.</p>
+    </div>`;
+}
+
+/* ================= avatars ================= */
+function renderAvatars(){
+  const p = prof();
+  document.querySelectorAll(".avatar-btn").forEach(b => {
+    b.textContent = initial(p);
+    b.style.setProperty("--c", `var(${colorOf(p)})`);
+    b.setAttribute("aria-label", `Profil: ${p.name}. Profile anzeigen`);
+  });
+}
+function renderAll(){
+  buildPlan(); loadState();
+  renderAvatars(); renderHeute(); renderWoche(); renderShop(); renderZiele(); renderNav();
+}
+
+/* ================= NAV / TABS ================= */
+function renderNav(){
+  const t = state.tab, today = $("#goToday"), reset = $("#shopReset");
+  $("#navTitle").textContent = TITLES[t];
+  today.hidden = t !== "woche"; today.disabled = state.day === TODAY;
+  reset.hidden = t !== "einkauf"; reset.disabled = !(shopDone[state.shop] || []).length;
+}
+function setTab(t, keepScroll){
+  if (!TITLES[t]) t = "heute";
+  scrollMem[state.tab] = scrollY;
+  state.tab = t;
+  document.querySelectorAll(".view").forEach(v => v.hidden = v.dataset.tab !== t);
+  document.querySelectorAll(".tab").forEach(b => b.setAttribute("aria-selected", b.dataset.tab === t));
+  placeInd(true);
+  renderNav();
+  store.set("tab", t);
+  if (!keepScroll) window.scrollTo(0, scrollMem[t] || 0);
+  onScroll();
+}
+let ticking = false;
+function onScroll(){
+  const nav = $("#nav"), lt = document.querySelector(".view:not([hidden]) .lt");
+  const navBottom = nav.getBoundingClientRect().bottom;
+  nav.classList.toggle("scrolled", scrollY > 4);
+  nav.classList.toggle("compact", !!lt && lt.getBoundingClientRect().bottom <= navBottom + 2);
+  ticking = false;
+}
+addEventListener("scroll", () => { if (!ticking){ ticking = true; requestAnimationFrame(onScroll); } }, {passive:true});
+addEventListener("resize", onScroll);
+
+/* ================= SHEET ================= */
+let sheetCtx = null, opener = null, closeTimer = 0;
+function openSheet(html, ctx, from){
+  clearTimeout(closeTimer);
+  const sh = $("#sheet"), sc = $("#scrim"), wasOpen = !sh.hidden && sh.classList.contains("open");
+  sheetCtx = ctx || {};
+  if (!wasOpen) opener = from || document.activeElement;
+  $("#sheetLeft").innerHTML = sheetCtx.left || "";
+  $("#sheetBarTitle").textContent = "";
+  $("#sheetBody").innerHTML = html;
+  $("#sheetBody").scrollTop = 0;
+  if (!wasOpen){
+    sh.hidden = false; sc.hidden = false; sh.style.transform = "";
+    document.documentElement.style.overflow = "hidden";
+    requestAnimationFrame(() => requestAnimationFrame(() => { sh.classList.add("open"); sc.classList.add("open"); }));
+  }
+  ((sheetCtx.focus && $(sheetCtx.focus)) || $("#sheetDone")).focus({preventScroll:true});
+}
+function closeSheet(){
+  const sh = $("#sheet"), sc = $("#scrim");
+  if (sh.hidden) return;
+  sh.classList.remove("open"); sc.classList.remove("open");
+  sh.style.transform = "";
+  document.documentElement.style.overflow = "";
+  closeTimer = setTimeout(() => { sh.hidden = true; sc.hidden = true; }, 520);
+  sheetCtx = null;
+  if (opener && document.contains(opener)) opener.focus({preventScroll:true});
+}
+function openMeal(di, si, from){
+  const x = PLAN.days[di].meals[si], M = x.M, m = x.m, sl = slot(di, si);
+  const ing = x.ing.map(([k, g, h]) => {
+    const a = recAmt(k, g, h);
+    return `<div class="row"><span class="mtext"><span class="mtitle">${ING[k].n}</span></span><span class="amt"><span class="samt">${a.main}</span>${a.sub ? `<small>${a.sub}</small>` : ""}</span></div>`;
+  }).join("");
+  const steps = M.steps.map(s => `<li><span>${s}</span></li>`).join("");
+  const isToday = di === TODAY, on = isToday && eaten.has(si);
+  const scaled = PLAN.days[di].scaled;
+  openSheet(`
+    <div class="sheet-head">
+      <p class="eyebrow">${PLAN.days[di].d} · ${sl.n} · ${sl.t} Uhr</p>
+      <h2 class="sheet-title" id="sheetTitle">${M.n}</h2>
+      <div class="chips"><span class="chip">${I.clock}${M.min} Min.</span>${M.tags.map(t => `<span class="chip">${t}</span>`).join("")}</div>
+    </div>
+    <div class="card stats">${stat("kcal","var(--ring-kcal)",m.k,"Kalorien")}${stat("Protein","var(--protein)",m.p,"Gramm")}${stat("KH","var(--carbs)",m.c,"Gramm")}${stat("Fett","var(--fat)",m.f,"Gramm")}</div>
+    <div class="grp">
+      <div class="grp-h"><h2>Zutaten</h2><span class="aside">1 Portion</span></div>
+      <div class="card list">${ing}</div>
+      ${scaled ? `<p class="foot">Mengen auf das Tagesziel von ${esc(PLAN.p.name)} (${nf0.format(PLAN.t.k)} kcal) angepasst.</p>` : ""}
+      ${M.prep ? `<p class="foot">Meal Prep am ${M.prep}: Koch gleich die dreifache Menge für drei Tage.</p>` : ""}
+    </div>
+    <div class="grp">
+      <div class="grp-h"><h2>Zubereitung</h2></div>
+      <ol class="card steps">${steps}</ol>
+    </div>
+    ${isToday ? `<button class="btn-primary lg-glass${on ? " on" : ""}" id="eatBtn" data-eat-sheet="${si}" aria-pressed="${on}">${L3}<span class="lg-content">${on ? I.checkBig + "Gegessen · Rückgängig machen" : "Als gegessen markieren"}</span></button>` : ""}`,
+    {kind:"meal", short: M.n.split(" mit ")[0]}, from);
+}
+
+/* ---------- profiles sheet ---------- */
+function openProfiles(from){
+  const rows = P.list.map(p => {
+    const t = calc(p), active = p.id === P.active;
+    return `<div class="row prow" style="--inset:68px">
+      <button class="pselect" data-pselect="${p.id}" aria-pressed="${active}">
+        <span class="avatar-sm" style="--c:var(${colorOf(p)})" aria-hidden="true">${esc(initial(p))}</span>
+        <span class="mtext"><span class="mtitle">${esc(p.name)}</span>
+          <span class="msub">${p.sex === "w" ? "W" : "M"} · ${p.age} J. · ${p.height} cm · ${nfq.format(p.weight)} kg</span>
+          <span class="msub">${nf0.format(t.k)} kcal · ${GOALS[p.goal].n} · ${DIETS[p.diet].n}</span></span>
+        ${active ? I.tick : ""}
+      </button>
+      <button class="info-btn" data-pedit="${p.id}" aria-label="${esc(p.name)} bearbeiten">${I.info}</button>
+    </div>`;
+  }).join("");
+  openSheet(`
+    <div class="sheet-head"><h2 class="sheet-title" id="sheetTitle">Profile</h2></div>
+    <div class="card list">
+      ${rows}
+      <button class="row add-row" data-pnew style="--inset:68px"><span class="plus-c" aria-hidden="true">${I.plus}</span><span class="mtitle">Profil hinzufügen</span></button>
+    </div>
+    <p class="foot">Jedes Profil hat seinen eigenen Plan, seine Häkchen und seine Einkaufsliste. Gespeichert wird nur auf diesem Gerät.</p>`,
+    {kind:"profiles", short:"Profile"}, from);
+}
+
+/* ---------- profile editor ---------- */
+let ED = null;
+const segForm = (name, opts, val, label) =>
+  `<div class="seg seg-form" role="radiogroup" aria-label="${label}" style="--n:${opts.length}">${opts.map(([v, l]) =>
+    `<button type="button" role="radio" data-fseg="${name}" data-v="${v}" aria-checked="${v === val}">${l}</button>`).join("")}</div>`;
+const numRow = (id, label, val, unit, mode) =>
+  `<label class="row frow" for="f-${id}"><span class="flabel">${label}</span><span class="finput"><input id="f-${id}" type="text" inputmode="${mode}" enterkeyhint="next" value="${esc(val)}" size="4"><span class="unit">${unit}</span></span></label>`;
+function openEditor(id, from, welcome){
+  const p = id ? P.list.find(x => x.id === id) : {...DEFAULT_PROFILE, name:""};
+  if (!p) return;
+  ED = {id: id || null, sex:p.sex, goal:p.goal, diet:p.diet, train:p.train, armed:false, welcome:!!welcome};
+  const canDel = id && P.list.length > 1;
+  openSheet(`
+    <div class="sheet-head">
+      <h2 class="sheet-title" id="sheetTitle">${welcome ? "Willkommen" : id ? "Profil bearbeiten" : "Neues Profil"}</h2>
+      ${welcome ? `<p class="sheet-intro">Leg dein Profil an. Daraus berechnet die App Kalorien, Makros und die Portionen im Plan. Alles bleibt auf diesem Gerät.</p>` : ""}
+    </div>
+    <form id="pform" class="pform" novalidate autocomplete="off">
+      <div class="card list">
+        <label class="row frow" for="f-name"><span class="flabel">Name</span><input class="ftext" id="f-name" type="text" maxlength="20" enterkeyhint="next" placeholder="z. B. Alex" value="${esc(p.name)}"></label>
+        <div class="row frow stack"><span class="flabel">Geschlecht</span>${segForm("sex", [["m","Männlich"],["w","Weiblich"]], p.sex, "Geschlecht")}</div>
+      </div>
+      <div class="card list">
+        ${numRow("age", "Alter", p.age, "Jahre", "numeric")}
+        ${numRow("height", "Größe", p.height, "cm", "numeric")}
+        ${numRow("weight", "Gewicht", String(p.weight).replace(".", ","), "kg", "decimal")}
+        <div class="row frow"><span class="flabel">Training</span><span class="finput"><b id="f-train-v">${p.train}×</b><span class="unit">pro Woche</span></span>
+          <div class="stepper"><button type="button" data-fstep="-1" aria-label="Ein Trainingstag weniger">−</button><i></i><button type="button" data-fstep="1" aria-label="Ein Trainingstag mehr">+</button></div></div>
+      </div>
+      <div class="card list">
+        <div class="row frow stack"><span class="flabel">Ziel</span>${segForm("goal", [["abnehmen","Abnehmen"],["halten","Halten"],["aufbau","Aufbau"]], p.goal, "Ziel")}</div>
+        <div class="row frow stack"><span class="flabel">Ernährung</span>${segForm("diet", [["misch","Mischkost"],["veggie","Vegetarisch"]], p.diet, "Ernährung")}</div>
+      </div>
+      <div class="card preview" id="f-preview" aria-live="polite"></div>
+      <p class="foot err" id="f-err" role="alert"></p>
+      <button type="submit" class="btn-primary lg-glass">${L3}<span class="lg-content">${id ? "Sichern" : welcome ? "Los geht’s" : "Profil anlegen"}</span></button>
+      ${id && !welcome ? `<button type="button" class="btn-danger" id="f-del"${canDel ? "" : " disabled"}>Profil löschen</button>` : ""}
+      ${id && !welcome && !canDel ? `<p class="foot">Das einzige Profil kannst du nicht löschen.</p>` : ""}
+    </form>`,
+    {kind:"editor", short: id ? p.name : "Neues Profil", focus: (!id || welcome) ? "#f-name" : null,
+     left: welcome ? "" : `<button class="lg-glass glass-circle" data-pback aria-label="Zurück zu den Profilen">${L3}${I.back}</button>`}, from);
+  updateStepper();
+  updatePreview();
+}
+function readForm(){
+  const num = id => parseFloat(($("#" + id).value || "").replace(",", "."));
+  const d = {name: $("#f-name").value.trim(), sex: ED.sex, age: Math.round(num("f-age")), height: Math.round(num("f-height")),
+             weight: Math.round(num("f-weight") * 10) / 10, train: ED.train, goal: ED.goal, diet: ED.diet};
+  const errs = [];
+  if (!d.name) errs.push(["f-name", "Gib einen Namen ein."]);
+  if (!(d.age >= 14 && d.age <= 99)) errs.push(["f-age", "Gib ein Alter zwischen 14 und 99 Jahren ein."]);
+  if (!(d.height >= 120 && d.height <= 230)) errs.push(["f-height", "Gib eine Größe zwischen 120 und 230 cm ein."]);
+  if (!(d.weight >= 35 && d.weight <= 250)) errs.push(["f-weight", "Gib ein Gewicht zwischen 35 und 250 kg ein."]);
+  return {d, errs};
+}
+function updatePreview(){
+  const box = $("#f-preview"); if (!box) return;
+  const {d, errs} = readForm();
+  if (errs.some(e => e[0] !== "f-name")){ box.innerHTML = `<span>Die Vorschau erscheint, sobald Alter, Größe und Gewicht passen.</span>`; return; }
+  const t = calc(d);
+  box.innerHTML = `<span>Tagesziel <b>${nf0.format(t.k)} kcal</b></span><span>Protein <b>${t.p} g</b></span><span>KH <b>${t.c} g</b></span><span>Fett <b>${t.f} g</b></span>`;
+}
+function updateStepper(){
+  $("#f-train-v").textContent = `${ED.train}×`;
+  const [minus, plus] = document.querySelectorAll("[data-fstep]");
+  minus.disabled = ED.train <= 0; plus.disabled = ED.train >= 7;
+}
+function saveForm(){
+  const {d, errs} = readForm();
+  document.querySelectorAll("#pform [aria-invalid]").forEach(el => el.removeAttribute("aria-invalid"));
+  if (errs.length){
+    $("#f-err").textContent = errs[0][1];
+    const el = $("#" + errs[0][0]); el.setAttribute("aria-invalid", "true"); el.focus();
+    return;
+  }
+  if (ED.id){
+    Object.assign(P.list.find(x => x.id === ED.id), d);
+  } else {
+    const used = P.list.map(x => x.color || 0);
+    let color = 0; while (used.includes(color) && color < COLORS.length) color++;
+    const p = {...d, id:newId(), color: color % COLORS.length};
+    P.list.push(p); P.active = p.id;
+  }
+  saveProfiles();
+  renderAll();
+  closeSheet();
+}
+function deleteProfile(){
+  const b = $("#f-del");
+  if (!ED.armed){
+    ED.armed = true; b.classList.add("armed"); b.textContent = "Wirklich löschen? Nochmal tippen";
+    setTimeout(() => { if (ED && b.isConnected){ ED.armed = false; b.classList.remove("armed"); b.textContent = "Profil löschen"; } }, 4000);
+    return;
+  }
+  const id = ED.id;
+  P.list = P.list.filter(x => x.id !== id);
+  if (P.active === id) P.active = P.list[0].id;
+  saveProfiles();
+  ["eaten." + id + ".", "water." + id + ".", "shop." + id].forEach(k => store.dropPrefix(k));
+  renderAll();
+  openProfiles();
+}
+
+/* sheet title in the bar once the big title scrolls away */
+$("#sheetBody").addEventListener("scroll", () => {
+  if (!sheetCtx) return;
+  const t = $("#sheetTitle");
+  $("#sheetBarTitle").textContent = t && t.getBoundingClientRect().bottom < $("#sheetGrip").getBoundingClientRect().bottom ? (sheetCtx.short || "") : "";
+}, {passive:true});
+/* drag to dismiss */
+(() => {
+  const grip = $("#sheetGrip"), sh = $("#sheet"); let drag = null;
+  grip.addEventListener("pointerdown", e => {
+    if (e.target.closest("button")) return;
+    drag = {y:e.clientY, dy:0}; sh.style.transition = "none"; grip.setPointerCapture(e.pointerId);
+  });
+  grip.addEventListener("pointermove", e => {
+    if (!drag) return; drag.dy = Math.max(0, e.clientY - drag.y); sh.style.transform = `translateY(${drag.dy}px)`;
+  });
+  const end = () => {
+    if (!drag) return; sh.style.transition = "";
+    if (drag.dy > 110) closeSheet(); else sh.style.transform = "";
+    drag = null;
+  };
+  grip.addEventListener("pointerup", end); grip.addEventListener("pointercancel", end);
+})();
+
+/* ================= LIQUID GLASS (skill: liquid-glass) ================= */
+// Refraction via SVG displacement maps (Chromium). Other browsers keep the frosted blur.
+const RM = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const LG = (() => {
+  try {
+    return /Chrome\/\d/.test(navigator.userAgent)
+      && !matchMedia("(prefers-reduced-transparency: reduce)").matches
+      && CSS.supports("backdrop-filter", "blur(1px)");
+  } catch (e) { return false; }
+})();
+if (LG) document.documentElement.classList.add("lg");
+const SVGNS = "http://www.w3.org/2000/svg";
+let lgSvg = null;
+/* Snell's law profile of a convex squircle bezel, n = 1.5, 127 samples (skill: references/physics.md).
+   d = 0 is the outer edge (steepest surface, strongest bend), d = 1 the start of the flat top. */
+const LG_PROFILE = (() => {
+  const N = 127, n2 = 1.5, f = d => Math.pow(1 - Math.pow(1 - d, 4), .25), out = [];
+  for (let i = 0; i < N; i++){
+    const d = i / (N - 1), e = 1e-4;
+    const der = (f(Math.min(d + e, 1)) - f(Math.max(d - e, 0))) / (2 * e);
+    let nx = -der, ny = 1; const l = Math.hypot(nx, ny); nx /= l; ny /= l;
+    const c1 = Math.min(1, Math.max(-1, ny)), s1 = Math.sqrt(Math.max(0, 1 - c1 * c1)), s2 = s1 / n2;
+    if (s2 > 1){ out.push(0); continue; }
+    const c2 = Math.sqrt(1 - s2 * s2), ratio = 1 / n2;
+    out.push(Math.abs((ratio * c1 - c2) * nx));
+  }
+  const mx = Math.max(...out) || 1;
+  return out.map(m => m / mx);
+})();
+/* Displacement map: R = x shift, G = y shift, 128 = neutral. Direction = outward surface normal of the
+   rounded rect (SDF gradient); with a negative scale the glass samples inward, i.e. it magnifies. */
+function lgMap(w, h, r, bezel){
+  const c = document.createElement("canvas"); c.width = w; c.height = h;
+  const ctx = c.getContext("2d"), img = ctx.createImageData(w, h), d = img.data, N = LG_PROFILE.length;
+  const hw = w / 2, hh = h / 2, rr = Math.min(r, hw, hh);
+  for (let y = 0; y < h; y++) for (let x = 0; x < w; x++){
+    const px = x + .5 - hw, py = y + .5 - hh;
+    const qx = Math.abs(px) - (hw - rr), qy = Math.abs(py) - (hh - rr);
+    const dist = Math.hypot(Math.max(qx, 0), Math.max(qy, 0)) + Math.min(Math.max(qx, qy), 0) - rr;
+    const i = (y * w + x) * 4, tt = -dist / bezel;
+    d[i + 2] = 128; d[i + 3] = 255;
+    if (dist > 0 || tt >= 1){ d[i] = 128; d[i + 1] = 128; continue; }
+    let nx, ny;
+    if (qx > 0 && qy > 0){ const l = Math.hypot(qx, qy) || 1; nx = qx / l * Math.sign(px); ny = qy / l * Math.sign(py); }
+    else if (qx > qy){ nx = Math.sign(px); ny = 0; } else { nx = 0; ny = Math.sign(py); }
+    const m = LG_PROFILE[Math.min(N - 1, Math.round(tt * (N - 1)))];
+    d[i] = 128 + nx * m * 127; d[i + 1] = 128 + ny * m * 127;
+  }
+  ctx.putImageData(img, 0, 0);
+  return c.toDataURL("image/png");
+}
+/* Filter graph. chromatic: three displacement passes (R/G/B, scale ±3–7 %), isolated with
+   feColorMatrix and merged with screen blends (template: glass-card). */
+function lgFilterMarkup(o){
+  const img = `<feImage result="map" x="0" y="0" preserveAspectRatio="none"/>`;
+  const dm = (s, res) => `<feDisplacementMap in="SourceGraphic" in2="map" scale="${s}" xChannelSelector="R" yChannelSelector="G" result="${res}"/>`;
+  if (!o.chromatic) return img + dm(o.scale, "out");
+  const cm = (inp, v, res) => `<feColorMatrix in="${inp}" type="matrix" values="${v}" result="${res}"/>`;
+  return img
+    + dm(o.scale, "dR")                      + cm("dR", "1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0", "R")
+    + dm(+(o.scale * 1.07).toFixed(1), "dG") + cm("dG", "0 0 0 0 0  0 1 0 0 0  0 0 0 0 0  0 0 0 1 0", "G")
+    + dm(+(o.scale * 1.03).toFixed(1), "dB") + cm("dB", "0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0", "B")
+    + `<feBlend in="R" in2="G" mode="screen" result="RG"/><feBlend in="RG" in2="B" mode="screen"/>`;
+}
+/* One filter per glass element. The feImage must match the element size exactly (skill pitfall),
+   so the map is regenerated whenever the element resizes. */
+function lgAttach(el, id, o){
+  if (!LG || !el || !window.ResizeObserver) return;
+  const layer = el.querySelector(":scope > .lg-refract");
+  if (!layer) return;
+  if (!lgSvg){
+    lgSvg = document.createElementNS(SVGNS, "svg");
+    lgSvg.setAttribute("aria-hidden", "true");
+    lgSvg.style.cssText = "position:absolute;width:0;height:0;overflow:hidden";
+    document.body.appendChild(lgSvg);
+  }
+  const fl = document.createElementNS(SVGNS, "filter");
+  fl.id = id;
+  fl.setAttribute("x", "0"); fl.setAttribute("y", "0"); fl.setAttribute("width", "100%"); fl.setAttribute("height", "100%");
+  fl.setAttribute("color-interpolation-filters", "sRGB");
+  fl.innerHTML = lgFilterMarkup(o);
+  lgSvg.appendChild(fl);
+  const fi = fl.querySelector("feImage");
+  let lw = 0, lh = 0;
+  new ResizeObserver(() => {
+    const w = Math.round(layer.offsetWidth), h = Math.round(layer.offsetHeight);
+    if (!w || !h || (w === lw && h === lh)) return;
+    lw = w; lh = h;
+    fi.setAttribute("href", lgMap(w, h, o.radius ?? h / 2, Math.min(o.bezel, h / 2, w / 2)));
+    fi.setAttribute("width", w); fi.setAttribute("height", h);
+    layer.style.setProperty("--lg-filter", `url(#${id})`);
+  }).observe(layer);
+}
+/* tab bar droplet: slides with a stretch, lifts into a lens while dragged */
+function placeInd(animate){
+  const ind = $("#tabInd"), b = document.querySelector(`.tab[data-tab="${state.tab}"]`);
+  if (!ind || !b || !b.offsetWidth) return;
+  const x = b.offsetLeft, w = b.offsetWidth, prev = ind._x;
+  ind._x = x;
+  ind.style.setProperty("--tw", w + "px");
+  if (animate && prev != null && prev !== x && !RM && ind.animate){
+    ind.style.transition = "none";
+    ind.style.setProperty("--tx", x + "px");
+    const mid = (prev + x) / 2;
+    const a = ind.animate([
+      {transform:`translateX(${prev}px) scale(1,1)`},
+      {transform:`translateX(${mid}px) scale(1.18,.88)`, offset:.42},
+      {transform:`translateX(${x}px) scale(.96,1.04)`, offset:.76},
+      {transform:`translateX(${x}px) scale(1,1)`}
+    ], {duration:500, easing:"cubic-bezier(.3,.7,.2,1)"});
+    a.onfinish = a.oncancel = () => { ind.style.transition = ""; };
+  } else ind.style.setProperty("--tx", x + "px");
+}
+(() => {
+  const bar = $("#tabbar"), ind = $("#tabInd"); let drag = null;
+  bar.addEventListener("pointerdown", e => {
+    if (e.button !== 0 || !e.target.closest(".tab")) return;
+    drag = {x0:e.clientX, moved:false, id:e.pointerId};
+  });
+  bar.addEventListener("pointermove", e => {
+    if (!drag) return;
+    if (!drag.moved){
+      if (Math.abs(e.clientX - drag.x0) < 8) return;
+      drag.moved = true; bar.setPointerCapture(drag.id);
+      bar.classList.add("dragging"); ind.classList.add("lifted");
+    }
+    const r = bar.getBoundingClientRect(), w = ind.offsetWidth;
+    const x = Math.max(5, Math.min(r.width - 5 - w, e.clientX - r.left - w / 2));
+    ind.style.setProperty("--tx", x + "px"); ind._x = x;
+  });
+  const end = e => {
+    if (!drag) return;
+    const moved = drag.moved; drag = null;
+    bar.classList.remove("dragging"); ind.classList.remove("lifted");
+    if (!moved) return;
+    let best = null, bd = 1e9;
+    bar.querySelectorAll(".tab").forEach(b => {
+      const br = b.getBoundingClientRect(), dd = Math.abs(br.left + br.width / 2 - e.clientX);
+      if (dd < bd){ bd = dd; best = b; }
+    });
+    if (best && best.dataset.tab !== state.tab) setTab(best.dataset.tab); else placeInd(false);
+  };
+  bar.addEventListener("pointerup", end); bar.addEventListener("pointercancel", end);
+  addEventListener("resize", () => placeInd(false));
+})();
+function initGlass(){
+  lgAttach($("#tabbar"), "lg-tab", {scale:-36, bezel:26, chromatic:true});
+  lgAttach($("#tabInd"), "lg-drop", {scale:-46, bezel:27});
+  lgAttach($("#goToday"), "lg-today", {scale:-26, bezel:16});
+  lgAttach($("#shopReset"), "lg-reset", {scale:-26, bezel:16});
+  lgAttach($("#sheet"), "lg-sheet", {scale:-30, bezel:30, radius:36});
+}
+
+/* ================= events ================= */
+document.addEventListener("click", e => {
+  const t = e.target;
+  let b;
+  if ((b = t.closest(".tab"))) return setTab(b.dataset.tab);
+  if ((b = t.closest("[data-profiles]"))) return openProfiles(b);
+  if ((b = t.closest("[data-pselect]"))){
+    P.active = b.dataset.pselect; saveProfiles(); renderAll(); return closeSheet();
+  }
+  if ((b = t.closest("[data-pedit]"))) return openEditor(b.dataset.pedit, b);
+  if (t.closest("[data-pnew]")) return openEditor(null);
+  if (t.closest("[data-pback]")) return openProfiles();
+  if ((b = t.closest("[data-fseg]"))){
+    const name = b.dataset.fseg;
+    b.parentElement.querySelectorAll("[data-fseg]").forEach(x => x.setAttribute("aria-checked", x === b));
+    ED[name] = b.dataset.v; return updatePreview();
+  }
+  if ((b = t.closest("[data-fstep]"))){
+    ED.train = Math.max(0, Math.min(7, ED.train + +b.dataset.fstep)); updateStepper(); return updatePreview();
+  }
+  if (t.closest("#f-del")) return deleteProfile();
+  if ((b = t.closest("[data-eat]"))) return toggleEaten(+b.dataset.eat);
+  if ((b = t.closest("[data-open]"))){ const [di, si] = b.dataset.open.split("-").map(Number); return openMeal(di, si, b); }
+  if ((b = t.closest("[data-day]"))){ state.day = +b.dataset.day; renderWoche(); b = document.querySelector(`[data-day="${state.day}"]`); b && b.focus({preventScroll:true}); return; }
+  if ((b = t.closest("[data-glass]"))){ const i = +b.dataset.glass; return setWater(water === i + 1 ? i : i + 1); }
+  if ((b = t.closest("[data-shop]"))) return toggleShop(b.dataset.shop);
+  if ((b = t.closest("[data-scope]"))){ state.shop = b.dataset.scope; return renderShop(); }
+  if ((b = t.closest("[data-eat-sheet]"))){
+    const si = +b.dataset.eatSheet; toggleEaten(si);
+    const on = eaten.has(si);
+    b.classList.toggle("on", on); b.setAttribute("aria-pressed", on);
+    b.querySelector(".lg-content").innerHTML = on ? I.checkBig + "Gegessen · Rückgängig machen" : "Als gegessen markieren";
+    return;
+  }
+  if (t.closest("#wMinus")) return setWater(water - 1);
+  if (t.closest("#wPlus")) return setWater(water + 1);
+  if (t.closest("#goToday")){ state.day = TODAY; return renderWoche(); }
+  if (t.closest("#shopReset")){ shopDone[state.shop] = []; store.set(`shop.${prof().id}`, shopDone); return renderShop(); }
+  if (t.closest("#sheetDone") || t.closest("#scrim")) return closeSheet();
+});
+document.addEventListener("submit", e => {
+  if (e.target.id === "pform"){ e.preventDefault(); saveForm(); }
+});
+document.addEventListener("input", e => {
+  if (!e.target.closest("#pform")) return;
+  e.target.removeAttribute("aria-invalid");
+  $("#f-err").textContent = "";
+  updatePreview();
+});
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape") closeSheet();
+  if (e.key === "Tab" && !$("#sheet").hidden){
+    const f = [...$("#sheet").querySelectorAll("button, input")].filter(x => !x.disabled && x.offsetParent !== null);
+    if (!f.length) return;
+    if (e.shiftKey && document.activeElement === f[0]){ e.preventDefault(); f[f.length-1].focus(); }
+    else if (!e.shiftKey && document.activeElement === f[f.length-1]){ e.preventDefault(); f[0].focus(); }
+  }
+  const tl = e.target.closest && e.target.closest("[role=tablist], [role=radiogroup]");
+  if (tl && (e.key === "ArrowRight" || e.key === "ArrowLeft")){
+    const items = [...tl.querySelectorAll("[role=tab], [role=radio]")], i = items.indexOf(e.target.closest("[role=tab], [role=radio]"));
+    if (i < 0) return;
+    e.preventDefault();
+    const n = items[(i + (e.key === "ArrowRight" ? 1 : items.length - 1)) % items.length];
+    n.click(); (tl.querySelectorAll("[role=tab], [role=radio]")[items.indexOf(n)] || n).focus();
+  }
+});
+
+/* ================= boot ================= */
+function start(data){
+  data = data || {};
+  if (data.day != null) state.day = data.day;
+  if (data.shop) state.shop = data.shop;
+  renderAll();
+  setTab(data.tab || store.get("tab", "heute"), true);
+  initGlass();
+  requestAnimationFrame(() => placeInd(false));
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => placeInd(false));
+  if (FIRST_RUN) setTimeout(() => openEditor(prof().id, null, true), 350);
+}
+window.claude?.hot?.snapshot?.(() => ({tab:state.tab, day:state.day, shop:state.shop}));
+window.claude?.hot?.ready ? window.claude.hot.ready(start) : start(window.claude?.hot?.data ?? {});
+
+</script>
+<script>if ("serviceWorker" in navigator) addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));</script>
+</body>
+</html>
